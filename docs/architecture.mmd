@@ -1,0 +1,50 @@
+flowchart TD
+    subgraph Frontend [Astro + React Frontend]
+      FE[Astro Static Pages]
+      RI[React Islands (Quiz, Flashcards, Chat, Auth, etc)]
+      TM[Tailwind + shadcn\ui<br/>Framer Motion]
+      FE -.->|Client SDK| FirebaseAuth
+      FE -.->|Client SDK| Firestore
+    end
+
+    subgraph Firebase ["Firebase (Backend)"]
+      FirebaseAuth[[Auth]]
+      Firestore[[Firestore<br/>NoSQL DB]]
+      CloudFunctions[[Cloud Functions<br/>(Node.js/TS)]]
+      Storage[[Storage<br/>PDFs, Images]]
+      Rules[[Security Rules]]
+    end
+
+    subgraph AI[Gemini AI<br/>Vertex AI]
+      Gemini[Gemini Model(API)]
+    end
+
+    subgraph 3rdParty[Third-Party Integrations]
+      Calendly[Cal.com/Calendly<br/>(Scheduling)]
+      Sentry[Sentry/LogRocket<br/>(Error Reporting)]
+      Analytics[Analytics<br/>(GA/Plausible)]
+      Algolia[Algolia Search]
+      Vision[OCR (Vision AI)]
+    end
+
+    subgraph CI[CI/CD & DevOps]
+      GitHubActions[GitHub Actions<br/>Lint/Test/Build/Deploy]
+      Preview[Firebase Hosting Preview Channels]
+    end
+
+    FE-->|SEO static, hydration islands|RI
+    FE-->|User actions, queries|FirebaseAuth
+    FE-->|User queries, reads, writes|Firestore
+    RI-->|Triggers (AI gen, scoring)|CloudFunctions
+    CloudFunctions-->|Gemini API call|Gemini
+    CloudFunctions-->|Writes|Firestore
+    CloudFunctions-->|Email/trigger|3rdParty
+    FE-->|Uploads/reads|Storage
+    FE-->|Analytics/Sentry|Analytics
+    Analytics-->|Reports|FE
+    Algolia-->|Search index|Firestore
+    Vision-->|OCR|Storage
+    GitHubActions-->|Deploy/QA|Preview
+    Preview-->|Serves|FE
+    Rules-->|Protects|Firestore
+    Rules-->|Protects|Storage

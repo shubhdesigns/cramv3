@@ -1,0 +1,17 @@
+---
+import { Layout } from "../components/UI/Layout";
+import { UserProvider } from "../components/Auth/UserProvider";
+import AuthGuardIsland from "../components/Auth/AuthGuardIsland";
+import SubjectsIsland from "../components/Subjects/SubjectsIsland";
+---
+
+<UserProvider>
+  <AuthGuardIsland client:only="react">
+    <Layout>
+      <div class="w-full max-w-6xl mx-auto">
+        <h1 class="font-heading text-3xl md:text-4xl font-bold text-accent1-light dark:text-accent1-dark mb-8">Your Subjects</h1>
+        <SubjectsIsland client:only="react" />
+      </div>
+    </Layout>
+  </AuthGuardIsland>
+</UserProvider>

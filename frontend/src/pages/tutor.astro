@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/Base.astro';
+import TutorChatIsland from '../components/TutorChatIsland.tsx';
+import AuthGuardIsland from '../components/AuthGuardIsland.tsx';
+---
+<BaseLayout>
+  <AuthGuardIsland client:only="react" />
+  <section class="max-w-2xl mx-auto py-12">
+    <h1 class="text-3xl font-bold mb-6">AI Chat Tutor</h1>
+    <TutorChatIsland client:only="react" />
+  </section>
+</BaseLayout>

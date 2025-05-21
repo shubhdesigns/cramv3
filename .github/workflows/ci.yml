@@ -1,0 +1,62 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lint-test-build-deploy:
+    runs-on: ubuntu-latest
+    env:
+      FIREBASE_CLI_LOGIN: ${{ secrets.FIREBASE_CLI_LOGIN }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies (frontend)
+        run: cd frontend && npm ci
+
+      - name: Install dependencies (functions)
+        run: cd functions && npm ci
+
+      - name: Lint (frontend)
+        run: cd frontend && npm run lint
+
+      - name: Format check (frontend)
+        run: cd frontend && npm run format:check
+
+      - name: Test Frontend (Jest)
+        run: cd frontend && npm test
+
+      - name: Test Functions
+        run: cd functions && npm test
+
+      - name: Build Frontend (Astro)
+        run: cd frontend && npm run build
+
+      - name: Build Functions (TypeScript)
+        run: cd functions && npm run build
+
+      - name: Deploy to Firebase Hosting Preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_CLI_LOGIN }}"
+          projectId: "cramtime-preview"
+          target: preview
+        if: github.ref != 'refs/heads/main'
+
+      - name: Deploy to Firebase Hosting Live
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_CLI_LOGIN }}"
+          projectId: "cramtime-preview"
+          target: live
+        if: github.ref == 'refs/heads/main'

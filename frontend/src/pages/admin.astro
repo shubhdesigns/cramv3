@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/Base.astro";
+import SubjectAuthorIsland from "../components/Admin/SubjectAuthorIsland.tsx";
+import { getAuth } from "firebase/auth";
+import { app } from "../utils/firebase";
+
+// This runs at build/SSR; in real use, move auth check to client/React and hide UI for non-admins
+const auth = getAuth(app);
+// TODO: check user role with auth.currentUser?.getIdTokenResult()
+
+---
+<BaseLayout>
+  <main class="max-w-3xl mx-auto py-10">
+    <h1 class="text-3xl font-bold mb-8 text-center">Admin Content Authoring</h1>
+    <SubjectAuthorIsland />
+    {/* Add other islands: QuestionAuthorIsland, FlashcardUploader, etc */}
+  </main>
+</BaseLayout>

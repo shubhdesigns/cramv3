@@ -1,0 +1,51 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: [main, staging, develop]
+  pull_request:
+    branches: [main, staging, develop]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      PUBLIC_FIREBASE_API_KEY: ${{ secrets.PUBLIC_FIREBASE_API_KEY }}
+      PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.PUBLIC_FIREBASE_AUTH_DOMAIN }}
+      PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.PUBLIC_FIREBASE_PROJECT_ID }}
+      PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.PUBLIC_FIREBASE_STORAGE_BUCKET }}
+      PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
+      PUBLIC_FIREBASE_APP_ID: ${{ secrets.PUBLIC_FIREBASE_APP_ID }}
+      PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.PUBLIC_FIREBASE_MEASUREMENT_ID }}
+      PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - run: npm ci
+
+      - name: Lint and Format
+        run: |
+          npx eslint ./src --ext .js,.jsx,.ts,.tsx || true
+          npm run format
+
+      - name: Run Unit Tests
+        run: npm run test
+
+      - name: Run E2E (Playwright)
+        run: npx playwright install --with-deps && npm run test:e2e
+
+      - name: Build (Astro)
+        run: npm run build
+
+      - name: Deploy Preview (Firebase Hosting)
+        if: github.event_name == 'pull_request'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          channelId: "pr${{ github.event.pull_request.number }}"
+          projectId: ${{ secrets.PUBLIC_FIREBASE_PROJECT_ID }}

@@ -1,0 +1,17 @@
+<!-- Plausible -->
+<script async defer data-domain="cramtime.com" src="https://plausible.io/js/plausible.js"></script>
+
+<!-- Sentry (Browser SDK) -->
+<script
+  src="https://browser.sentry-cdn.com/7.61.0/bundle.tracing.min.js"
+  integrity="sha384-+FSHfuMH/4w+jbk8Cx4KzLm8nrr5wKJ+Q5Z6LrJKDsaptc7+kvl0hkHDhmk9lz0f"
+  crossOrigin="anonymous"
+></script>
+<script>
+  Sentry.init({
+    dsn: "https://<YOUR_SENTRY_DSN>@sentry.io/projectid",
+    integrations: [new Sentry.BrowserTracing()],
+    tracesSampleRate: 0.1, // Tune as needed
+    // ...other config...
+  });
+</script>

@@ -1,0 +1,23 @@
+---
+import Base from "../../layouts/Base.astro";
+import QuizIsland from "../../components/Quiz/QuizIsland.tsx";
+import { getQuizById } from "../../utils/quizService.ts";
+
+// Get param from Astro (static, SSR, or SSG)
+const { quizId } = Astro.params;
+
+// Fetch the quiz (for demo: static mock, replace with Firestore data in production)
+const quiz = await getQuizById(quizId);
+---
+
+<Base>
+  <main class="max-w-2xl mx-auto py-10">
+    {quiz ? (
+      <QuizIsland questions={quiz.questions} title={quiz.title} />
+    ) : (
+      <div class="text-red-600 text-center py-10">
+        Quiz not found.
+      </div>
+    )}
+  </main>
+</Base>

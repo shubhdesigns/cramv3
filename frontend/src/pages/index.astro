@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="CramTime - Your AP Exam Study Platform">
+  <main class="min-h-screen bg-surface-light dark:bg-surface-dark">
+    <div class="container mx-auto px-4 py-16">
+      <div class="text-center">
+        <h1 class="text-5xl font-bold mb-6">Welcome to CramTime</h1>
+        <p class="text-xl mb-10 max-w-2xl mx-auto">The ultimate study platform for AP exams and college preparation</p>
+        
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/signin" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            Sign In
+          </a>
+          <a href="/signup" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+            Create Account
+          </a>
+        </div>
+      </div>
+      
+      <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-bold mb-3">AI-Powered Learning</h3>
+          <p>Smart study plans tailored to your needs with advanced AI technology.</p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-bold mb-3">Comprehensive Resources</h3>
+          <p>Access study materials for all AP subjects and college entrance exams.</p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-bold mb-3">Track Your Progress</h3>
+          <p>Monitor your improvement with detailed analytics and insights.</p>
+        </div>
+      </div>
+      
+      <div class="mt-16 text-center">
+        <h2 class="text-3xl font-bold mb-6">Ready to ace your exams?</h2>
+        <a href="/signup" class="inline-block px-8 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+          Get Started Free
+        </a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

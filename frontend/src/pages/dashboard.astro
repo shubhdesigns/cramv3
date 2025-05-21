@@ -1,0 +1,14 @@
+---
+import { Layout } from "../components/UI/Layout";
+import { UserProvider } from "../components/Auth/UserProvider";
+import AuthGuardIsland from "../components/Auth/AuthGuardIsland";
+import DashboardIsland from "../components/Dashboard/DashboardIsland";
+---
+
+<UserProvider>
+  <AuthGuardIsland client:only="react">
+    <Layout>
+      <DashboardIsland client:only="react" />
+    </Layout>
+  </AuthGuardIsland>
+</UserProvider>

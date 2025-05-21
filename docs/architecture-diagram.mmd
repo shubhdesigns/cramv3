@@ -1,0 +1,32 @@
+flowchart LR
+    A[Client: Browser]
+    subgraph Frontend
+        B[Astro Pages<br/>(static, SEO, islands)]
+        C[React Islands<br/>(Quiz, Flashcards, Chat, Calendar)]
+    end
+    subgraph Firebase
+        D[Firestore DB]
+        E[Auth]
+        F[Functions<br/>(AI, Save Progress, Email, Tutor Chat)]
+        G[Storage]
+    end
+    subgraph External APIs
+        H[Gemini Pro API]
+        I[Calendly/Cal.com]
+        J[Analytics<br/>Plausible/Sentry]
+    end
+
+    A -->|Static HTML/JS| B
+    B -->|Interactive islands| C
+
+    C -.->|Store/get data| D
+    C -.->|Auth| E
+    C -.->|Upload/download| G
+
+    C -->|onCall/onRequest| F
+    F <--> H
+    C -->|iframe| I
+
+    B -->|Track events| J
+    C -->|Track events| J
+    F -->|Log errors| J

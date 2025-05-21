@@ -1,0 +1,181 @@
+---
+import { Github, Twitter, Instagram } from 'lucide-react';
+import CustomCursor from '../components/CustomCursor';
+import '../styles/design-system.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "CramTime - Your Ultimate Study Companion" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-dark text-light">
+    <div class="scanline"></div>
+    <CustomCursor client:load />
+    
+    <header class="fixed top-0 left-0 right-0 z-50 bg-dark/80 backdrop-blur-lg border-b border-neon-blue/20">
+      <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="text-2xl font-bold text-neon-pink hover-glow">
+          <span class="glitch-text" data-text="CramTime">CramTime</span>
+        </a>
+        
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="/" class="text-neon-blue hover:text-neon-pink transition-colors">Home</a>
+          <a href="/study-tools" class="text-neon-blue hover:text-neon-pink transition-colors">Study Tools</a>
+          <a href="/ap-exams" class="text-neon-blue hover:text-neon-pink transition-colors">AP Exams</a>
+          <a href="/about" class="text-neon-blue hover:text-neon-pink transition-colors">About</a>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <a href="/login" class="px-4 py-2 text-neon-blue border border-neon-blue rounded hover:bg-neon-blue/10 transition-colors">
+            Login
+          </a>
+          <a href="/signup" class="px-4 py-2 bg-neon-pink text-dark rounded hover:bg-neon-pink/80 transition-colors">
+            Sign Up
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="pt-20">
+      <slot />
+    </main>
+
+    <footer class="bg-dark/80 backdrop-blur-lg border-t border-neon-blue/20 mt-20">
+      <div class="container mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="text-xl font-bold text-neon-pink mb-4">CramTime</h3>
+            <p class="text-light/80">Your ultimate study companion for AP exams and beyond.</p>
+          </div>
+          
+          <div>
+            <h4 class="text-lg font-bold text-neon-blue mb-4">Quick Links</h4>
+            <ul class="space-y-2">
+              <li><a href="/study-tools" class="text-light/80 hover:text-neon-pink transition-colors">Study Tools</a></li>
+              <li><a href="/ap-exams" class="text-light/80 hover:text-neon-pink transition-colors">AP Exams</a></li>
+              <li><a href="/about" class="text-light/80 hover:text-neon-pink transition-colors">About</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 class="text-lg font-bold text-neon-blue mb-4">Legal</h4>
+            <ul class="space-y-2">
+              <li><a href="/privacy" class="text-light/80 hover:text-neon-pink transition-colors">Privacy Policy</a></li>
+              <li><a href="/terms" class="text-light/80 hover:text-neon-pink transition-colors">Terms of Service</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 class="text-lg font-bold text-neon-blue mb-4">Connect</h4>
+            <div class="flex space-x-4">
+              <a href="#" class="text-light/80 hover:text-neon-pink transition-colors">
+                <Github className="w-6 h-6" />
+              </a>
+              <a href="#" class="text-light/80 hover:text-neon-pink transition-colors">
+                <Twitter className="w-6 h-6" />
+              </a>
+              <a href="#" class="text-light/80 hover:text-neon-pink transition-colors">
+                <Instagram className="w-6 h-6" />
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="border-t border-neon-blue/20 mt-8 pt-8 text-center text-light/60">
+          <p>&copy; {new Date().getFullYear()} CramTime. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  html {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Selection color */
+  ::selection {
+    background-color: #4F46E5;
+    color: white;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #F8F9FA;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #4F46E5;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4338CA;
+  }
+
+  /* Dark mode scrollbar */
+  @media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar-track {
+      background: #1A1A1A;
+    }
+  }
+</style>
+
+<style>
+  .scanline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent 50%,
+      rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: scanline 8s linear infinite;
+  }
+
+  @keyframes scanline {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(100vh);
+    }
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/Base.astro';
+import StudyPlanIsland from '../components/StudyPlanIsland.tsx';
+import AuthGuardIsland from '../components/AuthGuardIsland.tsx';
+
+// Frontend Firebase config and callable function setup assumed
+// import { functions } from '../firebase/...';
+// import { httpsCallable } from "firebase/functions";
+// const generateStudyPlan = httpsCallable(functions, "generateStudyPlan");
+
+const mockSubjects = ["AP Biology", "SAT Math"];
+
+---
+
+<BaseLayout>
+  <AuthGuardIsland client:only="react" />
+  <section class="max-w-2xl mx-auto py-12">
+    <h1 class="text-3xl font-bold mb-6">Personalized Study Plan</h1>
+    <StudyPlanIsland client:only="react" />
+  </section>
+</BaseLayout>

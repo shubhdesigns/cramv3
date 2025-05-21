@@ -1,0 +1,35 @@
+name: Functions CI/CD
+
+on:
+  push:
+    branches: [main, staging, develop]
+  pull_request:
+    branches: [main, staging, develop]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - run: npm ci
+
+      - name: Lint
+        run: npx eslint ./src --ext .js,.ts
+
+      - name: TypeScript Check
+        run: npx tsc --noEmit
+
+      - name: Unit Tests
+        run: npm run test
+
+      - name: Deploy (Preview or Prod)
+        if: github.ref == 'refs/heads/main'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          projectId: ${{ secrets.PUBLIC_FIREBASE_PROJECT_ID }}

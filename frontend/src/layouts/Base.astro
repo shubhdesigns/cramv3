@@ -1,0 +1,57 @@
+---
+import '../styles/tailwind.css';
+import ThemeSwitcher from '../components/UI/ThemeSwitcher';
+import ToastIsland from '../components/ToastIsland';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Cramtime - AI-powered exam prep",
+  description = "AI-powered exam prep for AP, SAT, and ACT. Quizzes, flashcards, study plans, and more."
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="canonical" href={Astro.url} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <!-- Accessibility -->
+    <meta name="color-scheme" content="light dark" />
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-200">
+    <a href="#main" class="sr-only focus:not-sr-only">Skip to content</a>
+    <header class="sticky top-0 z-50 px-4 py-2 flex items-center justify-between bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+      <a href="/" class="text-xl font-bold tracking-tight">Cramtime</a>
+      <nav class="flex gap-4 items-center">
+        <a href="/" class="hover:underline">Home</a>
+        <a href="/dashboard" class="hover:underline">Dashboard</a>
+        <a href="/login" class="hover:underline">Login</a>
+        <a href="/signup" class="hover:underline">Sign Up</a>
+        <a href="/profile" class="hover:underline">Profile</a>
+        <div id="user-menu-root"></div>
+        <ThemeSwitcher client:load />
+      </nav>
+    </header>
+    <ToastIsland client:load>
+      <main id="main" class="container mx-auto px-4 py-8">
+        <slot />
+      </main>
+    </ToastIsland>
+    <footer class="px-4 py-6 mt-10 text-center text-sm opacity-70 select-none border-t border-gray-200 dark:border-gray-800">
+      &copy; {new Date().getFullYear()} Cramtime. All rights reserved.
+    </footer>
+  </body>
+</html>

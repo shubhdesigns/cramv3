@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Poppins:wght@500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: 'Inter', ui-sans-serif, system-ui;
+  background-color: theme('colors.background.light');
+  color: theme('colors.text.primary.light');
+}
+
+body {
+  @apply bg-background-light text-text-primary-light font-body min-h-screen antialiased;
+}
+
+.dark html {
+  background-color: theme('colors.background.dark');
+  color: theme('colors.text.primary.dark');
+}
+
+.dark body {
+  @apply bg-background-dark text-text-primary-dark;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', 'Satoshi', ui-sans-serif, system-ui;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular;
+}
+
+/* Custom styles for focus/skip nav/accessibility */
+.skip-link {
+  @apply sr-only focus:not-sr-only absolute top-2 left-2 bg-yellow-300 text-black rounded px-4 py-1 z-50;
+}

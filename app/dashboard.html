@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - CramTime</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: #f8f9fa;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #ddd;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #4338ca;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      color: #555;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #4338ca;
+    }
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #4f46e5;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 2rem;
+    }
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+    .sidebar {
+      background: white;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar-menu li {
+      margin-bottom: 0.5rem;
+    }
+    .sidebar-menu a {
+      display: block;
+      padding: 0.75rem;
+      color: #555;
+      text-decoration: none;
+      border-radius: 0.25rem;
+      transition: all 0.2s;
+    }
+    .sidebar-menu a:hover {
+      background: #f8f9fa;
+      color: #4338ca;
+    }
+    .sidebar-menu a.active {
+      background: #4338ca;
+      color: white;
+    }
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .welcome-banner {
+      background: linear-gradient(to right, #4338ca, #4f46e5);
+      color: white;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .welcome-banner h1 {
+      font-size: 1.8rem;
+      margin: 0;
+    }
+    .card {
+      background: white;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .card-header h2 {
+      font-size: 1.25rem;
+      margin: 0;
+    }
+    .progress-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .progress-item {
+      text-align: center;
+    }
+    .progress-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: conic-gradient(#4338ca var(--progress), #f1f5f9 0deg);
+      margin: 0 auto 1rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .progress-circle::before {
+      content: "";
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+    }
+    .progress-value {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #4338ca;
+      position: relative;
+      z-index: 1;
+    }
+    .progress-label {
+      font-size: 0.875rem;
+      color: #555;
+    }
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .course-card {
+      background: white;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .course-card:hover {
+      transform: translateY(-5px);
+    }
+    .course-img {
+      width: 100%;
+      height: 120px;
+      background-color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4338ca;
+      font-weight: bold;
+    }
+    .course-content {
+      padding: 1rem;
+    }
+    .course-title {
+      font-size: 1rem;
+      font-weight: bold;
+      margin: 0 0 0.5rem;
+    }
+    .course-meta {
+      font-size: 0.875rem;
+      color: #555;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .button {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #4f46e5;
+      color: white;
+      text-decoration: none;
+      border-radius: 0.25rem;
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+    .button:hover {
+      background-color: #4338ca;
+    }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #ddd;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="logo">CramTime</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="study-tools.html">Study Tools</a>
+      <a href="subjects.html">Subjects</a>
+    </div>
+    <div class="user-menu">
+      <div class="avatar">JS</div>
+      <span>John</span>
+    </div>
+  </nav>
+
+  <div class="dashboard">
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="study-plan.html">My Study Plan</a></li>
+        <li><a href="flashcards.html">Flashcards</a></li>
+        <li><a href="quizzes.html">Quizzes</a></li>
+        <li><a href="tutor.html">AI Tutor</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="index.html">Sign Out</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <section class="welcome-banner">
+        <div>
+          <h1>Welcome back, John!</h1>
+          <p>Your AP exam is in 76 days. Keep up the great work!</p>
+        </div>
+        <a href="study-plan.html" class="button">Continue Studying</a>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>Your Progress</h2>
+          <a href="progress.html">View Details</a>
+        </div>
+        <div class="progress-section">
+          <div class="progress-item">
+            <div class="progress-circle" style="--progress: 75%;">
+              <span class="progress-value">75%</span>
+            </div>
+            <span class="progress-label">AP Physics</span>
+          </div>
+          <div class="progress-item">
+            <div class="progress-circle" style="--progress: 60%;">
+              <span class="progress-value">60%</span>
+            </div>
+            <span class="progress-label">AP Calculus</span>
+          </div>
+          <div class="progress-item">
+            <div class="progress-circle" style="--progress: 45%;">
+              <span class="progress-value">45%</span>
+            </div>
+            <span class="progress-label">AP Biology</span>
+          </div>
+          <div class="progress-item">
+            <div class="progress-circle" style="--progress: 90%;">
+              <span class="progress-value">90%</span>
+            </div>
+            <span class="progress-label">AP History</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>Continue Learning</h2>
+          <a href="courses.html">See All Courses</a>
+        </div>
+        <div class="courses-grid">
+          <div class="course-card">
+            <div class="course-img">AP Physics</div>
+            <div class="course-content">
+              <h3 class="course-title">Momentum & Energy</h3>
+              <div class="course-meta">
+                <span>5 modules</span>
+                <span>75% complete</span>
+              </div>
+            </div>
+          </div>
+          <div class="course-card">
+            <div class="course-img">AP Calculus</div>
+            <div class="course-content">
+              <h3 class="course-title">Differential Equations</h3>
+              <div class="course-meta">
+                <span>3 modules</span>
+                <span>40% complete</span>
+              </div>
+            </div>
+          </div>
+          <div class="course-card">
+            <div class="course-img">AP Biology</div>
+            <div class="course-content">
+              <h3 class="course-title">Cell Structure</h3>
+              <div class="course-meta">
+                <span>4 modules</span>
+                <span>25% complete</span>
+              </div>
+            </div>
+          </div>
+          <div class="course-card">
+            <div class="course-img">AP History</div>
+            <div class="course-content">
+              <h3 class="course-title">Cold War Era</h3>
+              <div class="course-meta">
+                <span>6 modules</span>
+                <span>85% complete</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>Recommended Study Sessions</h2>
+        </div>
+        <ul>
+          <li><a href="#">AP Biology: Cell Respiration - Review Quiz (15 mins)</a></li>
+          <li><a href="#">AP Calculus: Integration Practice - Worksheet (20 mins)</a></li>
+          <li><a href="#">AP Physics: Force Problems - Practice Session (30 mins)</a></li>
+          <li><a href="#">AP History: Cold War Timeline - Interactive Study (25 mins)</a></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 CramTime. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // This would typically contain interactive functionality
+    // For this static version, we're keeping JavaScript minimal
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Dashboard loaded successfully');
+    });
+  </script>
+</body>
+</html> 

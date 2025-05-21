@@ -1,0 +1,37 @@
+---
+import { Layout } from "../components/UI/Layout";
+import { UserProvider } from "../components/Auth/UserProvider";
+import AuthGuardIsland from "../components/Auth/AuthGuardIsland";
+import FlashcardCreateIsland from "../components/Flashcards/FlashcardCreateIsland";
+import FlashcardsIsland from "../components/Flashcards/FlashcardsIsland";
+
+// Sample flashcards for demo purposes
+const sampleFlashcards = [
+  { id: "f1", question: "Photosynthesis occurs in the...?", answer: "Chloroplasts", status: "new" },
+  { id: "f2", question: "What is the value of π (Pi) rounded to 3 decimals?", answer: "3.142", status: "learned" },
+  { id: "f3", question: "What is the capital of France?", answer: "Paris", status: "new" },
+  { id: "f4", question: "What is the chemical symbol for gold?", answer: "Au", status: "learning" }
+];
+
+// In a real implementation, we would fetch from a database or API
+// import { getUserFlashcards } from "../utils/flashcardService.ts";
+// const flashcards = await getUserFlashcards();
+---
+
+<UserProvider>
+  <AuthGuardIsland client:only="react">
+    <Layout>
+      <div class="w-full max-w-4xl mx-auto flex flex-col gap-8">
+        <h1 class="font-heading text-3xl md:text-4xl font-bold text-accent2-light dark:text-accent2-dark mb-4">Flashcards</h1>
+        <FlashcardCreateIsland client:only="react" />
+        <FlashcardsIsland client:only="react" />
+      </div>
+    </Layout>
+  </AuthGuardIsland>
+</UserProvider>
+
+        <FlashcardsIsland client:only="react" />
+      </div>
+    </Layout>
+  </AuthGuardIsland>
+</UserProvider>

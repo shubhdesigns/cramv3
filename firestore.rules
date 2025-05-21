@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      // Check if user has admin or editor role in custom claims
+      return request.auth != null && 
+        (request.auth.token.role == "admin" || request.auth.token.role == "editor");
+    }
+    // ---- PUBLIC CONTENT ----
+    match /subjects/{subjectId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /subjects/{subjectId}/units/{unitId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /questions/{questionId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /quizzes/{quizId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /flashcards/{cardId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /pastExams/{examId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    // ---- USER DATA (PRIVATE) ----
+    match /users/{userId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if request.auth.uid == userId;
+
+      // --- Subcollections safeguarding ---
+      match /{sub=**} {
+        allow read, write: if request.auth.uid == userId;
+      }
+    }
+    // ---- GLOBAL SCHEDULES ----
+    match /schedules/{scheduleId} {
+      allow read, write: if request.auth != null && (request.auth.uid == resource.data.userId || isAdmin());
+    }
+    // ---- CHAT/TUTOR SESSIONS LOG (analytics) ----
+    match /sessions/{sessionId} {
+      // Only accessible to admins or analytics service, not the general userbase
+      allow read, write: if isAdmin();
+    }
+    // ---- DEFAULT: DENY ALL ----
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

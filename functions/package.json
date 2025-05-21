@@ -1,0 +1,24 @@
+{
+  "name": "cramtime-functions",
+  "version": "1.0.0",
+  "private": true,
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "dependencies": {
+    "algoliasearch": "^5.25.0",
+    "axios": "^1.6.8",
+    "firebase-admin": "^11.10.1",
+    "firebase-functions": "^4.4.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.30",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "typescript": "^5.4.5"
+  }
+}

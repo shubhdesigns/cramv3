@@ -1,0 +1,10 @@
+/frontend/src/pages/
+  ├── index.astro                # Home (Hero section, product pitch, CTA)
+  ├── subjects.astro             # List all AP/SAT/ACT subjects (pulled from Firestore)
+  ├── quiz/[quizId].astro        # Quiz take page (renders Quiz.tsx island)
+  ├── dashboard.astro            # User dashboard (progress, next steps)
+  ├── flashcards.astro           # Flashcards browser/player
+  ├── study-plan.astro           # AI-powered study plan generator
+  ├── tutor.astro                # Chat tutor interface
+  ├── book-session.astro         # Scheduling via Calendly/Cal.com
+  └── _template.astro            # Layout

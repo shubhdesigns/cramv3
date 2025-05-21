@@ -1,0 +1,18 @@
+/frontend         # Astro + React frontend
+  ├── src/
+  ├── public/
+  ├── package.json
+  ├── astro.config.mjs
+  └── tailwind.config.js
+
+/functions        # Firebase Cloud Functions (Node/TS)
+  ├── src/
+  ├── package.json
+  └── tsconfig.json
+
+/docs             # Documentation, specs, data models
+  ├── data-model.md
+  └── architecture-diagram.md
+
+.gitignore
+README.md
