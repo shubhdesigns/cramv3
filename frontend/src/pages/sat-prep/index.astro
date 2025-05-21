@@ -1,0 +1,163 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Use static data for SAT prep sections
+const satSections = [
+  { 
+    id: "reading-writing", 
+    name: "Reading & Writing", 
+    icon: "📚", 
+    description: "Master reading comprehension, grammar, and effective writing skills."
+  },
+  { 
+    id: "math-calculator", 
+    name: "Math (Calculator)", 
+    icon: "🧮", 
+    description: "Practice algebra, problem solving, and data analysis with calculator." 
+  },
+  { 
+    id: "math-no-calculator", 
+    name: "Math (No Calculator)", 
+    icon: "📐", 
+    description: "Master essential math concepts without calculator dependency."
+  },
+  { 
+    id: "essay", 
+    name: "Essay Writing", 
+    icon: "✍️", 
+    description: "Learn to analyze arguments and write persuasive essays."
+  }
+];
+
+// Resources for SAT prep
+const studyResources = [
+  { 
+    id: "practice-tests", 
+    name: "Full Practice Tests", 
+    icon: "📝", 
+    description: "Complete timed practice tests to simulate test day conditions." 
+  },
+  { 
+    id: "flashcards", 
+    name: "Vocabulary Flashcards", 
+    icon: "🔤", 
+    description: "Build essential vocabulary with spaced repetition learning." 
+  },
+  { 
+    id: "strategies", 
+    name: "Test Strategies", 
+    icon: "🧠", 
+    description: "Learn time management, question approach, and scoring strategies." 
+  },
+  { 
+    id: "daily-drills", 
+    name: "Daily Practice Drills", 
+    icon: "🔄", 
+    description: "Short, focused practice sessions to build skills consistently." 
+  }
+];
+---
+
+<BaseLayout title="SAT Prep | cramti.me">
+  <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold font-heading text-accent1-light dark:text-accent1-dark mb-4">SAT Preparation</h1>
+      <p class="text-lg text-text-secondary-light dark:text-text-secondary-dark max-w-3xl mx-auto">
+        Comprehensive study materials to help you excel on the SAT. Practice with our section-specific resources and full-length tests.
+      </p>
+    </div>
+    
+    <!-- SAT Test Sections -->
+    <div class="mb-16">
+      <h2 class="text-2xl font-bold font-heading mb-6 border-b border-border-light dark:border-border-dark pb-2">
+        SAT Test Sections
+      </h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+        {satSections.map(section => (
+          <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md transition-all">
+            <div class="p-5">
+              <div class="flex items-center gap-3 mb-4">
+                {section.icon && (
+                  <span class="text-3xl">{section.icon}</span>
+                )}
+                <h3 class="text-xl font-bold font-heading">{section.name}</h3>
+              </div>
+              
+              <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm mb-4 min-h-[3rem]">
+                {section.description}
+              </p>
+              
+              <div class="flex justify-center">
+                <a 
+                  href={`/sat-prep/${section.id}`} 
+                  class="inline-flex items-center justify-center px-5 py-2.5 bg-accent1-light dark:bg-accent1-dark text-white rounded-lg font-medium hover:opacity-90 transition-opacity w-full"
+                >
+                  Study Now
+                  <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+    
+    <!-- Study Resources -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold font-heading mb-6 border-b border-border-light dark:border-border-dark pb-2">
+        Study Resources
+      </h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+        {studyResources.map(resource => (
+          <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md transition-all">
+            <div class="p-5">
+              <div class="flex items-center gap-3 mb-4">
+                {resource.icon && (
+                  <span class="text-3xl">{resource.icon}</span>
+                )}
+                <h3 class="text-xl font-bold font-heading">{resource.name}</h3>
+              </div>
+              
+              <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm mb-4 min-h-[3rem]">
+                {resource.description}
+              </p>
+              
+              <div class="flex justify-center">
+                <a 
+                  href={`/sat-prep/resources/${resource.id}`} 
+                  class="inline-flex items-center justify-center px-5 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-colors w-full"
+                >
+                  Access Resource
+                  <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+    
+    <!-- SAT Info Section -->
+    <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-border-light dark:border-border-dark p-6 mb-12">
+      <h2 class="text-2xl font-bold font-heading mb-4">About the SAT</h2>
+      <div class="prose prose-sm max-w-none dark:prose-invert">
+        <p>The SAT is a standardized test widely used for college admissions in the United States. The current version is focused on testing skills in reading, writing, and mathematics, with an optional essay section.</p>
+        <p class="mt-3">The test is designed to assess your readiness for college and predict future academic success. A strong SAT score can be a significant factor in college admissions decisions and scholarship opportunities.</p>
+        <p class="mt-3">Our comprehensive SAT prep resources are designed to help you understand the test format, build essential skills, and develop effective test-taking strategies to maximize your score.</p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Custom styles for SAT prep page */
+  .hover\:shadow-md:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+</style> 
