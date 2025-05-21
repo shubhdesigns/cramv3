@@ -10,6 +10,9 @@ export default defineConfig({
   ],
   output: "static", // Static output for Firebase Hosting
   site: "https://cramtime.com", // Update for SEO
+  markdown: {
+    syntaxHighlight: 'prism', // Use Prism instead of Shiki to avoid dependency issues
+  },
 });
 
 /*

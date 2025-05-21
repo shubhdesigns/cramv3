@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { useFirebase } from "../../firebase/init";
 
 interface UserContextType {
@@ -18,29 +17,30 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
-  const [db, setDb] = useState<any>(null);
   const [firebaseModule, setFirebaseModule] = useState<any>(null);
 
   // Initialize Firebase when component mounts
   useEffect(() => {
     useFirebase((module) => {
       setFirebaseModule(module);
-      if (module.app) {
-        setDb(getFirestore(module.app));
-      }
     });
   }, []);
 
   useEffect(() => {
     if (!firebaseModule) return;
     
-    const unsubscribe = firebaseModule.onAuthStateChanged(async (firebaseUser) => {
+    const unsubscribe = firebaseModule.onAuthStateChanged((firebaseUser: any) => {
       setUser(firebaseUser);
       setLoading(false);
-      if (firebaseUser && db) {
+      if (firebaseUser && firebaseModule.db) {
         try {
-          const userDoc = await getDoc(doc(db, "users", firebaseUser.uid));
-          setOnboardingComplete(!!userDoc.data()?.onboardingComplete);
+          firebaseModule.firestore.getDoc(
+            firebaseModule.firestore.doc(firebaseModule.db, "users", firebaseUser.uid)
+          ).then((userDoc: any) => {
+            setOnboardingComplete(!!userDoc.data()?.onboardingComplete);
+          }).catch((error: any) => {
+            console.error("Error fetching user data:", error);
+          });
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
@@ -49,7 +49,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     });
     return () => unsubscribe();
-  }, [db, firebaseModule]);
+  }, [firebaseModule]);
 
   return (
     <UserContext.Provider value={{ user, loading, onboardingComplete }}>

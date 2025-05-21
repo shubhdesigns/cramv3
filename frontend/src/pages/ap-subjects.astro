@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+// Remove direct Firebase imports for server-side rendering
+// import { db } from '../firebase/firebase';
+// import { collection, getDocs, query, where } from 'firebase/firestore';
+
+// Use fallback data instead of fetching from Firebase in SSR
+const apSubjects = {
+  categories: [
+    "Math & Computer Science", 
+    "Science", 
+    "History", 
+    "English",
+    "World Languages & Cultures",
+    "Social Science",
+    "Arts",
+    "Capstone"
+  ],
+  subjectsByCategory: {
+    "Math & Computer Science": [
+      { id: "ap-calculus-ab", name: "AP Calculus AB", icon: "📊", description: "Master differential and integral calculus concepts." },
+      { id: "ap-calculus-bc", name: "AP Calculus BC", icon: "📈", description: "Advanced calculus including series and polar functions." },
+      { id: "ap-statistics", name: "AP Statistics", icon: "📉", description: "Data analysis, experiments, probability and inference." },
+      { id: "ap-computer-science-a", name: "AP Computer Science A", icon: "💻", description: "Java programming fundamentals and algorithms." }
+    ],
+    "Science": [
+      { id: "ap-biology", name: "AP Biology", icon: "🧬", description: "Explore evolution, cellular processes, and ecology." },
+      { id: "ap-chemistry", name: "AP Chemistry", icon: "⚗️", description: "Atomic structure, reactions, thermodynamics, and equilibrium." },
+      { id: "ap-physics-1", name: "AP Physics 1", icon: "🔭", description: "Newtonian mechanics, work, energy, and mechanical waves." }
+    ],
+    "History": [
+      { id: "ap-us-history", name: "AP US History", icon: "🇺🇸", description: "American history from pre-Columbian to present day." },
+      { id: "ap-world-history", name: "AP World History", icon: "🌎", description: "Global historical developments across centuries." }
+    ],
+    "English": [
+      { id: "ap-english-literature", name: "AP English Literature", icon: "📚", description: "Literary analysis through reading and writing." },
+      { id: "ap-english-language", name: "AP English Language", icon: "✒️", description: "Rhetorical analysis and composition skills." }
+    ]
+  }
+};
+---
+
+<BaseLayout title="AP Subjects | cramti.me">
+  <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold font-heading text-accent1-light dark:text-accent1-dark mb-4">AP Subjects</h1>
+      <p class="text-lg text-text-secondary-light dark:text-text-secondary-dark max-w-3xl mx-auto">
+        Comprehensive study materials for all AP exams. Choose a subject to get started with practice tests, flashcards, and more.
+      </p>
+    </div>
+    
+    {apSubjects.categories && apSubjects.categories.map(category => (
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold font-heading mb-6 border-b border-border-light dark:border-border-dark pb-2">
+          {category}
+        </h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {apSubjects.subjectsByCategory[category]?.map(subject => (
+            <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md transition-all">
+              <div class="p-5">
+                <div class="flex items-center gap-3 mb-4">
+                  {subject.icon && (
+                    <span class="text-3xl">{subject.icon}</span>
+                  )}
+                  <h3 class="text-xl font-bold font-heading">{subject.name}</h3>
+                </div>
+                
+                <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm mb-4 min-h-[3rem]">
+                  {subject.description || `Master every unit and prepare effectively for the ${subject.name} exam.`}
+                </p>
+                
+                <div class="flex justify-center">
+                  <a 
+                    href={`/subjects/${subject.id}`} 
+                    class="inline-flex items-center justify-center px-5 py-2.5 bg-accent1-light dark:bg-accent1-dark text-white rounded-lg font-medium hover:opacity-90 transition-opacity w-full"
+                  >
+                    Study Now
+                    <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+    
+    {(!apSubjects.categories || apSubjects.categories.length === 0) && (
+      <div class="flex flex-col items-center justify-center py-16">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-accent1-light dark:border-accent1-dark mb-4"></div>
+        <p class="text-lg text-text-secondary-light dark:text-text-secondary-dark">Loading AP subjects...</p>
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  /* Custom styles for AP subjects page */
+  .hover\:shadow-md:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+</style> 

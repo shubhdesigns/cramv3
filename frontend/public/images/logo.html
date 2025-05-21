@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate Logo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+    #canvas {
+      border: 1px solid #ddd;
+    }
+    .instructions {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <canvas id="canvas" width="512" height="512"></canvas>
+    <div class="instructions">
+      <p>Right-click on the image and select "Save Image As..." to save as logo.png</p>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // Fill background with gradient
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, '#4F46E5');
+      gradient.addColorStop(1, '#7C3AED');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Add rounded corners (simulating border-radius)
+      const radius = 50;
+      ctx.fillStyle = '#4F46E5';
+      ctx.beginPath();
+      ctx.moveTo(canvas.width - radius, 0);
+      ctx.arcTo(canvas.width, 0, canvas.width, radius, radius);
+      ctx.arcTo(canvas.width, canvas.height, canvas.width - radius, canvas.height, radius);
+      ctx.arcTo(0, canvas.height, 0, canvas.height - radius, radius);
+      ctx.arcTo(0, 0, radius, 0, radius);
+      ctx.closePath();
+      ctx.fill();
+      
+      // Fill with gradient again to ensure proper color
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Add text
+      ctx.fillStyle = 'white';
+      ctx.font = 'bold 72px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('cramti.me', canvas.width / 2, canvas.height / 2 - 30);
+      
+      // Add book icon
+      ctx.font = '100px Arial';
+      ctx.fillText('📚', canvas.width / 2, canvas.height / 2 + 80);
+      
+      // Convert to image
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png');
+      document.body.appendChild(img);
+    };
+  </script>
+</body>
+</html> 

@@ -1,91 +1,180 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Clock, BookOpen, BarChart3, Lightbulb, BrainCircuit, Flashcard, FileQuestion, Calendar } from 'lucide-react';
 ---
 
-<BaseLayout title="AI Study Tools | CramTime">
-  <main class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-    <div class="container mx-auto px-4 py-12">
-      <div class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">
-          AI-Powered Study Tools
+<BaseLayout title="Study Tools | CramTime">
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-b from-primary/10 to-background-light py-12">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-text-primary-light">
+          Smart Tools for Effective Studying
         </h1>
-        <p class="text-xl max-w-2xl mx-auto">
-          Enhance your learning experience with our advanced AI tools. Get personalized study plans,
-          generate flashcards, practice questions, and more.
+        <p class="text-xl text-text-secondary-light mb-8">
+          Our AI-powered study tools help you learn more efficiently and retain information longer.
+          Personalized to your learning style and academic goals.
         </p>
-      </div>
-
-      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-        <!-- AI Study Tools Component will go here -->
-        <div class="text-center p-8">
-          <h2 class="text-2xl font-semibold mb-4">Coming Soon</h2>
-          <p>Our AI-powered study tools are being fine-tuned for optimal learning experiences.</p>
-        </div>
-      </div>
-
-      <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-semibold ml-4">
-              Smart Learning
-            </h3>
-          </div>
-          <p>
-            Our AI adapts to your learning style and pace, providing personalized content
-            and recommendations.
-          </p>
-        </div>
-
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-semibold ml-4">
-              Comprehensive Resources
-            </h3>
-          </div>
-          <p>
-            Access a wide range of study materials, including AP exam resources and
-            College Board integration.
-          </p>
-        </div>
-
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-semibold ml-4">
-              Progress Tracking
-            </h3>
-          </div>
-          <p>
-            Monitor your learning progress with detailed analytics and performance insights.
-          </p>
-        </div>
-      </div>
-
-      <div class="mt-16 text-center">
-        <a
-          href="/signup"
-          class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <span>Get Started Now</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
+        <a href="/signup" class="px-6 py-3 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors inline-block font-medium">
+          Try All Tools Free
         </a>
       </div>
     </div>
-  </main>
+  </section>
+
+  <!-- Tools Grid Section -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-12 text-center">Our Learning Tools</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Flashcards -->
+        <div class="bg-surface-light rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <Flashcard className="w-6 h-6" />
+            </div>
+            <h3 class="text-xl font-bold ml-4">Smart Flashcards</h3>
+          </div>
+          <p class="text-text-secondary-light mb-4">
+            Create, customize and study with AI-generated flashcards that adapt to your learning progress.
+          </p>
+          <a href="/flashcards" class="text-primary font-medium hover:text-primary-dark transition-colors flex items-center">
+            Start creating <span class="ml-1">→</span>
+          </a>
+        </div>
+        
+        <!-- Practice Quizzes -->
+        <div class="bg-surface-light rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <FileQuestion className="w-6 h-6" />
+            </div>
+            <h3 class="text-xl font-bold ml-4">Practice Quizzes</h3>
+          </div>
+          <p class="text-text-secondary-light mb-4">
+            Test your knowledge with customized quizzes that focus on your weak areas and mimic real exam questions.
+          </p>
+          <a href="/quizzes" class="text-primary font-medium hover:text-primary-dark transition-colors flex items-center">
+            Take a quiz <span class="ml-1">→</span>
+          </a>
+        </div>
+        
+        <!-- Study Planner -->
+        <div class="bg-surface-light rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <Calendar className="w-6 h-6" />
+            </div>
+            <h3 class="text-xl font-bold ml-4">Study Planner</h3>
+          </div>
+          <p class="text-text-secondary-light mb-4">
+            Get a personalized study schedule based on your exam dates, strengths, and available study time.
+          </p>
+          <a href="/study-plan" class="text-primary font-medium hover:text-primary-dark transition-colors flex items-center">
+            Create a plan <span class="ml-1">→</span>
+          </a>
+        </div>
+        
+        <!-- AI Tutor -->
+        <div class="bg-surface-light rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <BrainCircuit className="w-6 h-6" />
+            </div>
+            <h3 class="text-xl font-bold ml-4">AI Tutor</h3>
+          </div>
+          <p class="text-text-secondary-light mb-4">
+            Get instant explanations and clarification on difficult concepts with our AI tutor.
+          </p>
+          <div class="text-accent-dark font-medium flex items-center">
+            Coming Soon
+          </div>
+        </div>
+        
+        <!-- Progress Tracking -->
+        <div class="bg-surface-light rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <BarChart3 className="w-6 h-6" />
+            </div>
+            <h3 class="text-xl font-bold ml-4">Progress Analytics</h3>
+          </div>
+          <p class="text-text-secondary-light mb-4">
+            Track your learning journey with detailed analytics showing your improvement over time.
+          </p>
+          <a href="/dashboard" class="text-primary font-medium hover:text-primary-dark transition-colors flex items-center">
+            View progress <span class="ml-1">→</span>
+          </a>
+        </div>
+        
+        <!-- Resource Library -->
+        <div class="bg-surface-light rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <BookOpen className="w-6 h-6" />
+            </div>
+            <h3 class="text-xl font-bold ml-4">Resource Library</h3>
+          </div>
+          <p class="text-text-secondary-light mb-4">
+            Access a comprehensive collection of study materials, practice tests, and reference guides.
+          </p>
+          <a href="/subjects" class="text-primary font-medium hover:text-primary-dark transition-colors flex items-center">
+            Browse resources <span class="ml-1">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="py-16 bg-gradient-to-b from-background-light to-surface-light">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-12 text-center">How Our Tools Help You Excel</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
+            <Lightbulb className="w-8 h-8" />
+          </div>
+          <h3 class="text-xl font-bold mb-2">Personalized Learning</h3>
+          <p class="text-text-secondary-light">Our AI adapts to your unique learning style and knowledge gaps.</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
+            <Clock className="w-8 h-8" />
+          </div>
+          <h3 class="text-xl font-bold mb-2">Time Efficiency</h3>
+          <p class="text-text-secondary-light">Study smarter, not harder, with tools that focus on what you need most.</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
+            <BrainCircuit className="w-8 h-8" />
+          </div>
+          <h3 class="text-xl font-bold mb-2">Active Recall</h3>
+          <p class="text-text-secondary-light">Our methods are based on proven learning science for better retention.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4 max-w-3xl text-center">
+      <h2 class="text-3xl font-bold mb-6">Ready to Transform Your Study Habits?</h2>
+      <p class="text-xl mb-8 text-text-secondary-light">
+        Join thousands of students who have improved their grades and test scores with CramTime's study tools.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/signup" class="px-6 py-3 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors font-medium">
+          Sign Up Free
+        </a>
+        <a href="/subjects" class="px-6 py-3 border border-primary text-primary rounded-md hover:bg-primary hover:text-white transition-colors font-medium">
+          Explore Subjects
+        </a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

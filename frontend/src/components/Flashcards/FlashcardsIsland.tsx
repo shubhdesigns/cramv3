@@ -3,7 +3,7 @@ import { useFirebase } from "../../firebase/init";
 import { collection, getDocs } from "firebase/firestore";
 import { Card } from "../UI/Card";
 import { Button } from "../UI/Button";
-import { Dialog } from "../UI/Dialog";
+import Dialog from "../UI/Dialog";
 import { httpsCallable } from "firebase/functions";
 
 interface Flashcard {

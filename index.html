@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cramtime</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(90deg, #4a6cf7 0%, #6a3ef8 100%);
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <h1 class="text-2xl font-bold text-blue-600">Cramtime</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600">Home</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600">Subjects</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600">Flashcards</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600">Tutor</a></li>
+                    <li><a href="#" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-gradient text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">AI-Powered Exam Prep</h2>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Master AP, SAT, and ACT exams with personalized study plans, AI tutoring, and interactive quizzes.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#" class="bg-white text-blue-600 px-6 py-3 rounded-md font-medium hover:bg-gray-100">Start Learning</a>
+                <a href="#" class="border border-white text-white px-6 py-3 rounded-md font-medium hover:bg-white hover:text-blue-600">Take a Tour</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Why Choose Cramtime?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card bg-gray-50 p-6 rounded-lg shadow-sm">
+                    <div class="text-blue-600 text-4xl mb-4">📚</div>
+                    <h3 class="text-xl font-semibold mb-3">Comprehensive Content</h3>
+                    <p class="text-gray-600">Expertly crafted study materials covering all major topics for AP, SAT, and ACT exams.</p>
+                </div>
+                <div class="feature-card bg-gray-50 p-6 rounded-lg shadow-sm">
+                    <div class="text-blue-600 text-4xl mb-4">🤖</div>
+                    <h3 class="text-xl font-semibold mb-3">AI Tutor</h3>
+                    <p class="text-gray-600">Get personalized help 24/7 with our advanced AI tutor powered by Google Gemini.</p>
+                </div>
+                <div class="feature-card bg-gray-50 p-6 rounded-lg shadow-sm">
+                    <div class="text-blue-600 text-4xl mb-4">📊</div>
+                    <h3 class="text-xl font-semibold mb-3">Progress Tracking</h3>
+                    <p class="text-gray-600">Track your improvement with detailed analytics and personalized study recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-12">Available Subjects</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-semibold text-lg mb-2">AP Calculus</h3>
+                    <p class="text-gray-600 text-sm">AB & BC</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-semibold text-lg mb-2">AP Biology</h3>
+                    <p class="text-gray-600 text-sm">Complete Curriculum</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-semibold text-lg mb-2">SAT Math</h3>
+                    <p class="text-gray-600 text-sm">All Sections</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-semibold text-lg mb-2">ACT English</h3>
+                    <p class="text-gray-600 text-sm">Grammar & Composition</p>
+                </div>
+            </div>
+            <a href="#" class="inline-block mt-8 text-blue-600 font-medium hover:underline">View All Subjects →</a>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Cramtime</h3>
+                    <p class="text-gray-400">AI-powered exam prep for AP, SAT, and ACT.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Subjects</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">Twitter</a>
+                        <a href="#" class="text-gray-400 hover:text-white">Facebook</a>
+                        <a href="#" class="text-gray-400 hover:text-white">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2025 Cramtime. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

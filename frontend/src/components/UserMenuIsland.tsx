@@ -1,21 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
+import { useFirebase } from "../firebase/init";
+// Remove react-router-dom import
+
+// Define types for Firebase auth
+type User = {
+  email: string | null;
+  uid: string;
+};
+
+type FirebaseModule = {
+  auth: any;
+  firebaseAuth: any;
+};
+
 import { Button } from "./UI/Button";
-import { useNavigate } from "react-router-dom";
 
 export default function UserMenuIsland() {
   const [user, setUser] = useState<User | null>(null);
-  const auth = getAuth();
-  const navigate = useNavigate();
+  const [firebaseModule, setFirebaseModule] = useState<FirebaseModule | null>(null);
 
+  // Initialize Firebase when component mounts
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, setUser);
-    return () => unsub();
-  }, [auth]);
+    useFirebase((module: any) => {
+      setFirebaseModule(module);
+      
+      // Set up auth state listener once Firebase is loaded
+      if (module && module.auth) {
+        const unsub = module.auth.onAuthStateChanged((currentUser: User | null) => {
+          setUser(currentUser);
+        });
+        return () => unsub();
+      }
+    });
+  }, []);
 
   async function handleLogout() {
-    await signOut(auth);
-    navigate("/");
+    if (firebaseModule && firebaseModule.auth) {
+      await firebaseModule.firebaseAuth.signOut(firebaseModule.auth);
+      window.location.href = "/";
+    }
   }
 
   if (user) {

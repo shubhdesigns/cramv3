@@ -1,104 +1,202 @@
 ---
-import { Github, Twitter, Instagram } from 'lucide-react';
-import CustomCursor from '../components/CustomCursor';
+import { BookOpen, Sparkles, UserCircle, ChevronDown, Github, Twitter, Instagram, Menu, X } from 'lucide-react';
 import '../styles/design-system.css';
+import ThemeSwitcher from '../components/UI/ThemeSwitcher';
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = "CramTime - Your Ultimate Study Companion" } = Astro.props;
+const { title, description = "cramti.me - Your Ultimate Study Companion for AP and SAT Exams" } = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="icon" type="image/png" href="../logo.png" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <!-- Theme initialization script - placed in the head to avoid flashing -->
+    <script is:inline>
+      // Check for saved theme preference or use system preference
+      const savedTheme = localStorage.getItem('theme');
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      // Set the theme class on the html element
+      if (savedTheme === 'light') {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      } else {
+        // Default to dark theme if no preference or system prefers dark
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    </script>
   </head>
-  <body class="bg-dark text-light">
-    <div class="scanline"></div>
-    <CustomCursor client:load />
-    
-    <header class="fixed top-0 left-0 right-0 z-50 bg-dark/80 backdrop-blur-lg border-b border-neon-blue/20">
-      <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
-        <a href="/" class="text-2xl font-bold text-neon-pink hover-glow">
-          <span class="glitch-text" data-text="CramTime">CramTime</span>
-        </a>
-        
-        <div class="hidden md:flex items-center space-x-8">
-          <a href="/" class="text-neon-blue hover:text-neon-pink transition-colors">Home</a>
-          <a href="/study-tools" class="text-neon-blue hover:text-neon-pink transition-colors">Study Tools</a>
-          <a href="/ap-exams" class="text-neon-blue hover:text-neon-pink transition-colors">AP Exams</a>
-          <a href="/about" class="text-neon-blue hover:text-neon-pink transition-colors">About</a>
-        </div>
-        
-        <div class="flex items-center space-x-4">
-          <a href="/login" class="px-4 py-2 text-neon-blue border border-neon-blue rounded hover:bg-neon-blue/10 transition-colors">
-            Login
+  <body class="bg-background-light text-text-primary-light dark:bg-background-dark dark:text-text-primary-dark">
+    <header class="sticky top-0 z-50 bg-white dark:bg-background-dark shadow-sm">
+      <div class="container mx-auto px-4">
+        <nav class="flex items-center justify-between py-4">
+          <a href="/" class="text-2xl font-bold text-primary hover:text-primary-dark transition-colors">
+            cramti.me
           </a>
-          <a href="/signup" class="px-4 py-2 bg-neon-pink text-dark rounded hover:bg-neon-pink/80 transition-colors">
-            Sign Up
+          
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center space-x-8 ml-auto mr-8">
+            <a href="/ap-subjects" class="text-text-primary-light hover:text-primary transition-colors dark:text-text-primary-dark">
+              AP Subjects
+            </a>
+            
+            <a href="/sat-prep" class="text-text-primary-light hover:text-primary transition-colors dark:text-text-primary-dark">
+              SAT Prep
+            </a>
+            
+            <a href="/quizzes" class="text-text-primary-light hover:text-primary transition-colors dark:text-text-primary-dark">
+              Practice Tests
+            </a>
+            
+            <a href="/flashcards" class="text-text-primary-light hover:text-primary transition-colors dark:text-text-primary-dark">
+              Flashcards
+            </a>
+            
+            <a href="/study-plan" class="text-text-primary-light hover:text-primary transition-colors dark:text-text-primary-dark">
+              Study Plans
+            </a>
+            
+            <a href="/about" class="text-text-primary-light hover:text-primary transition-colors dark:text-text-primary-dark">About</a>
+            
+            <div class="flex items-center">
+              <ThemeSwitcher client:load />
+            </div>
+          </div>
+          
+          <!-- Mobile Navigation Menu Button -->
+          <div class="flex md:hidden items-center space-x-4">
+            <ThemeSwitcher client:load />
+            <button id="mobile-menu-button" aria-label="Open mobile menu" class="text-text-primary-light dark:text-text-primary-dark p-1">
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+          
+          <div class="hidden md:flex items-center space-x-4">
+            <a href="/signup" class="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-md transition-colors dark:bg-primary-dark dark:hover:bg-primary">
+              Sign Up
+            </a>
+            <a href="/signin" class="px-4 py-2 border border-primary text-primary hover:bg-primary hover:text-white rounded-md transition-colors dark:text-primary-dark dark:border-primary-dark dark:hover:bg-primary-dark dark:hover:text-white">
+              Log In
+            </a>
+          </div>
+        </nav>
+      </div>
+      
+      <!-- Mobile Menu Overlay -->
+      <div id="mobile-menu" class="fixed inset-0 z-50 bg-background-light dark:bg-background-dark bg-opacity-95 dark:bg-opacity-95 flex flex-col hidden">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+          <a href="/" class="text-2xl font-bold text-primary dark:text-primary-dark">
+            cramti.me
           </a>
+          <button id="mobile-menu-close" aria-label="Close mobile menu" class="text-text-primary-light dark:text-text-primary-dark p-1">
+            <X className="w-6 h-6" />
+          </button>
         </div>
-      </nav>
+        <div class="flex-1 container mx-auto px-4 py-8">
+          <div class="flex flex-col space-y-6 text-lg">
+            <a href="/ap-subjects" class="text-text-primary-light dark:text-text-primary-dark hover:text-primary dark:hover:text-primary-dark">AP Subjects</a>
+            <a href="/sat-prep" class="text-text-primary-light dark:text-text-primary-dark hover:text-primary dark:hover:text-primary-dark">SAT Prep</a>
+            <a href="/quizzes" class="text-text-primary-light dark:text-text-primary-dark hover:text-primary dark:hover:text-primary-dark">Practice Tests</a>
+            <a href="/flashcards" class="text-text-primary-light dark:text-text-primary-dark hover:text-primary dark:hover:text-primary-dark">Flashcards</a>
+            <a href="/study-plan" class="text-text-primary-light dark:text-text-primary-dark hover:text-primary dark:hover:text-primary-dark">Study Plans</a>
+            <a href="/about" class="text-text-primary-light dark:text-text-primary-dark hover:text-primary dark:hover:text-primary-dark">About</a>
+            
+            <a href="/signup" class="mt-4 w-full px-4 py-3 bg-primary hover:bg-primary-dark text-white text-center rounded-md transition-colors dark:bg-primary-dark dark:hover:bg-primary">
+              Sign Up
+            </a>
+            <a href="/signin" class="w-full px-4 py-3 border border-primary text-primary hover:bg-primary hover:text-white text-center rounded-md transition-colors dark:text-primary-dark dark:border-primary-dark dark:hover:bg-primary-dark dark:hover:text-white">
+              Log In
+            </a>
+          </div>
+        </div>
+      </div>
     </header>
 
-    <main class="pt-20">
+    <main>
       <slot />
     </main>
 
-    <footer class="bg-dark/80 backdrop-blur-lg border-t border-neon-blue/20 mt-20">
-      <div class="container mx-auto px-4 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer class="bg-surface-light dark:bg-surface-dark mt-20 py-12 border-t border-border-light dark:border-border-dark">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div>
-            <h3 class="text-xl font-bold text-neon-pink mb-4">CramTime</h3>
-            <p class="text-light/80">Your ultimate study companion for AP exams and beyond.</p>
+            <h3 class="text-xl font-bold text-primary mb-4 dark:text-primary-dark">cramti.me</h3>
+            <p class="text-text-secondary-light dark:text-text-secondary-dark">The ultimate study companion - created by students, for students.</p>
+            <p class="text-text-secondary-light dark:text-text-secondary-dark mt-3">
+              <a href="mailto:support@cramti.me" class="hover:text-primary dark:hover:text-primary-dark transition-colors">support@cramti.me</a>
+            </p>
           </div>
           
           <div>
-            <h4 class="text-lg font-bold text-neon-blue mb-4">Quick Links</h4>
+            <h4 class="text-lg font-semibold text-text-primary-light mb-4 dark:text-text-primary-dark">Study Resources</h4>
             <ul class="space-y-2">
-              <li><a href="/study-tools" class="text-light/80 hover:text-neon-pink transition-colors">Study Tools</a></li>
-              <li><a href="/ap-exams" class="text-light/80 hover:text-neon-pink transition-colors">AP Exams</a></li>
-              <li><a href="/about" class="text-light/80 hover:text-neon-pink transition-colors">About</a></li>
+              <li><a href="/flashcards" class="text-text-secondary-light hover:text-primary transition-colors dark:text-text-secondary-dark dark:hover:text-primary-dark">Flashcards</a></li>
+              <li><a href="/quizzes" class="text-text-secondary-light hover:text-primary transition-colors dark:text-text-secondary-dark dark:hover:text-primary-dark">Practice Tests</a></li>
+              <li><a href="/study-plan" class="text-text-secondary-light hover:text-primary transition-colors dark:text-text-secondary-dark dark:hover:text-primary-dark">Study Plans</a></li>
             </ul>
           </div>
           
-          <div>
-            <h4 class="text-lg font-bold text-neon-blue mb-4">Legal</h4>
+          <div class="sm:col-span-2 md:col-span-1">
+            <h4 class="text-lg font-semibold text-text-primary-light mb-4 dark:text-text-primary-dark">Company</h4>
             <ul class="space-y-2">
-              <li><a href="/privacy" class="text-light/80 hover:text-neon-pink transition-colors">Privacy Policy</a></li>
-              <li><a href="/terms" class="text-light/80 hover:text-neon-pink transition-colors">Terms of Service</a></li>
+              <li><a href="/about" class="text-text-secondary-light hover:text-primary transition-colors dark:text-text-secondary-dark dark:hover:text-primary-dark">About Us</a></li>
+              <li><a href="/privacy" class="text-text-secondary-light hover:text-primary transition-colors dark:text-text-secondary-dark dark:hover:text-primary-dark">Privacy Policy</a></li>
+              <li><a href="/terms" class="text-text-secondary-light hover:text-primary transition-colors dark:text-text-secondary-dark dark:hover:text-primary-dark">Terms of Service</a></li>
             </ul>
           </div>
           
-          <div>
-            <h4 class="text-lg font-bold text-neon-blue mb-4">Connect</h4>
+          <div class="sm:col-span-2 md:col-span-1">
+            <h4 class="text-lg font-semibold text-text-primary-light mb-4 dark:text-text-primary-dark">Connect</h4>
             <div class="flex space-x-4">
-              <a href="#" class="text-light/80 hover:text-neon-pink transition-colors">
-                <Github className="w-6 h-6" />
+              <a href="#" class="text-text-secondary-light hover:text-primary transition-colors dark:text-text-secondary-dark dark:hover:text-primary-dark">
+                <Github className="w-5 h-5" />
               </a>
-              <a href="#" class="text-light/80 hover:text-neon-pink transition-colors">
-                <Twitter className="w-6 h-6" />
+              <a href="#" class="text-text-secondary-light hover:text-primary transition-colors dark:text-text-secondary-dark dark:hover:text-primary-dark">
+                <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" class="text-light/80 hover:text-neon-pink transition-colors">
-                <Instagram className="w-6 h-6" />
+              <a href="https://instagram.com/cramti.me" class="text-text-secondary-light hover:text-primary transition-colors dark:text-text-secondary-dark dark:hover:text-primary-dark">
+                <Instagram className="w-5 h-5" />
               </a>
             </div>
           </div>
         </div>
         
-        <div class="border-t border-neon-blue/20 mt-8 pt-8 text-center text-light/60">
-          <p>&copy; {new Date().getFullYear()} CramTime. All rights reserved.</p>
+        <div class="border-t border-border-light mt-8 pt-8 text-center text-text-secondary-light dark:border-border-dark dark:text-text-secondary-dark">
+          <p>&copy; {new Date().getFullYear()} cramti.me. All rights reserved.</p>
         </div>
       </div>
     </footer>
+    
+    <script>
+      // Mobile menu functionality
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenuClose = document.getElementById('mobile-menu-close');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      if (mobileMenuButton && mobileMenuClose && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+          mobileMenu.classList.remove('hidden');
+          document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+        });
+        
+        mobileMenuClose.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          document.body.style.overflow = ''; // Restore scrolling
+        });
+      }
+    </script>
   </body>
 </html>
 
@@ -122,7 +220,7 @@ const { title, description = "CramTime - Your Ultimate Study Companion" } = Astr
 
   /* Selection color */
   ::selection {
-    background-color: #4F46E5;
+    background-color: #3B82F6;
     color: white;
   }
 
@@ -132,50 +230,64 @@ const { title, description = "CramTime - Your Ultimate Study Companion" } = Astr
   }
 
   ::-webkit-scrollbar-track {
-    background: #F8F9FA;
+    background: #F3F4F6;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #4F46E5;
+    background: #3B82F6;
     border-radius: 5px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #4338CA;
+    background: #1E40AF;
   }
 
   /* Dark mode scrollbar */
   @media (prefers-color-scheme: dark) {
     ::-webkit-scrollbar-track {
-      background: #1A1A1A;
+      background: #1E293B;
     }
   }
-</style>
-
-<style>
-  .scanline {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      to bottom,
-      transparent 50%,
-      rgba(0, 0, 0, 0.1) 50%
-    );
-    background-size: 100% 4px;
-    pointer-events: none;
-    z-index: 9999;
-    animation: scanline 8s linear infinite;
+  
+  body.dark {
+    background-color: #121826;
+    color: #F3F4F6;
   }
 
-  @keyframes scanline {
-    0% {
-      transform: translateY(0);
+  .dark header, .dark footer {
+    background-color: #1A2234;
+    border-color: #2D3748;
+  }
+
+  .dark .bg-white {
+    background-color: #1A2234;
+  }
+
+  .dark .bg-surface-light {
+    background-color: #1E293B;
+  }
+
+  .dark .text-text-primary-light {
+    color: #F9FAFB;
+  }
+
+  .dark .text-text-secondary-light {
+    color: #D1D5DB;
+  }
+  
+  /* Add responsive font sizing */
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 1.875rem !important; /* text-3xl */
     }
-    100% {
-      transform: translateY(100vh);
+    h2 {
+      font-size: 1.5rem !important; /* text-2xl */
+    }
+    h3 {
+      font-size: 1.25rem !important; /* text-xl */
+    }
+    p {
+      font-size: 1rem !important; /* text-base */
     }
   }
 </style>

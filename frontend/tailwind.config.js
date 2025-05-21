@@ -9,36 +9,39 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Cramtime Brand Palette
+        // CramTime Color Palette
+        primary: {
+          DEFAULT: '#1E40AF', // Deep blue for trust and focus
+          light: '#3B82F6',
+          dark: '#1E3A8A',
+        },
+        accent: {
+          DEFAULT: '#38BDF8', // Light sky blue for highlights
+          light: '#7DD3FC',
+          dark: '#0EA5E9',
+        },
         background: {
-          light: '#FDFDFE',
-          dark: '#0F172A',
+          light: '#FFFFFF',
+          dark: '#1E293B',
+          offwhite: '#F8FAFC',
         },
         surface: {
           light: '#F3F4F6',
           dark: '#1E293B',
         },
         border: {
-          light: '#E5E7EB',
+          light: '#E2E8F0',
           dark: '#334155',
         },
         text: {
           primary: {
-            light: '#1A1A1A',
+            light: '#1E293B', // Dark gray/navy for text
             dark: '#F8FAFC',
           },
           secondary: {
-            light: '#4A4A4A',
+            light: '#64748B',
             dark: '#94A3B8',
           },
-        },
-        accent1: {
-          light: '#4F46E5',
-          dark: '#6366F1',
-        },
-        accent2: {
-          light: '#22D3EE',
-          dark: '#67E8F9',
         },
         success: {
           light: '#10B981',
@@ -52,25 +55,26 @@ module.exports = {
           light: '#3B82F6',
           dark: '#60A5FA',
         },
-        // For easy use in components
-        brand: {
-          DEFAULT: '#4F46E5', // Indigo 600
-          cyan: '#22D3EE',    // Cyan 400
-          dark: '#6366F1',    // Indigo 500
-        },
       },
       fontFamily: {
-        heading: ['Poppins', 'Satoshi', 'ui-sans-serif', 'system-ui'],
-        body: ['Inter', 'ui-sans-serif', 'system-ui'],
+        sans: ['Inter', 'Roboto', 'ui-sans-serif', 'system-ui'],
+        heading: ['Inter', 'Roboto', 'ui-sans-serif', 'system-ui'],
+        body: ['Inter', 'Roboto', 'ui-sans-serif', 'system-ui'],
         mono: ['JetBrains Mono', 'IBM Plex Mono', 'ui-monospace', 'SFMono-Regular'],
       },
       borderRadius: {
-        'xl': '1rem',
-        '2xl': '1.5rem',
+        'sm': '0.25rem',
+        'md': '0.375rem',
+        'lg': '0.5rem',
+        'xl': '0.75rem',
+        '2xl': '1rem',
       },
       boxShadow: {
-        'md': '0 4px 12px 0 rgba(31, 41, 55, 0.08)',
-        'lg': '0 8px 24px 0 rgba(31, 41, 55, 0.12)',
+        'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        'DEFAULT': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+        'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
       },
     },
   },

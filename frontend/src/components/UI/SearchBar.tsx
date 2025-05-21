@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { searchAll } from "../../utils/algolia";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDebounce } from "../../utils/hooks";
-import { Highlight } from "../UI/Highlight";
+import Highlight from "../UI/Highlight";
 
 type SearchResult = {
   objectID: string;
@@ -55,6 +54,7 @@ export default function SearchBar() {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [activeCategory, setActiveCategory] = useState<SearchCategory | null>(null);
   const [totalCount, setTotalCount] = useState(0);
+  const [searchError, setSearchError] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const resultRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -75,7 +75,11 @@ export default function SearchBar() {
       }
       
       setLoading(true);
+      setSearchError(false);
+      
       try {
+        // Dynamically import to avoid SSR issues
+        const { searchAll } = await import("../../utils/algolia");
         const searchResults = await searchAll(debouncedQuery);
         setResults(searchResults);
         setTotalCount(
@@ -85,6 +89,12 @@ export default function SearchBar() {
         );
       } catch (error) {
         console.error("Search error:", error);
+        setSearchError(true);
+        setResults({
+          subjects: [],
+          flashcards: [],
+          quizzes: []
+        });
       } finally {
         setLoading(false);
       }

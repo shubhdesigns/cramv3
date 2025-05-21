@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Convert SVG to PNG</title>
+</head>
+<body>
+  <!-- The SVG logo -->
+  <svg id="logoSvg" width="512" height="512" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#4F46E5"/>
+        <stop offset="100%" style="stop-color:#7C3AED"/>
+      </linearGradient>
+    </defs>
+    <rect width="32" height="32" rx="8" fill="url(#gradient)"/>
+    <path d="M16 6L8 10L16 14L24 10L16 6Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M8 22L16 26L24 22" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M8 16L16 20L24 16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+
+  <!-- Canvas to convert SVG to PNG -->
+  <canvas id="canvas" width="512" height="512" style="display: none;"></canvas>
+  
+  <div style="text-align: center; margin-top: 20px;">
+    <p>Right-click on the image below and select "Save Image As..." to save as logo.png</p>
+    <img id="pngOutput" alt="logo.png" style="border: 1px solid #ccc; margin-top: 10px;"/>
+  </div>
+
+  <script>
+    // Convert SVG to PNG
+    function convertSvgToPng() {
+      const svgElement = document.getElementById('logoSvg');
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      // Create a data URL from the SVG
+      const svgData = new XMLSerializer().serializeToString(svgElement);
+      const svgBlob = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
+      const url = URL.createObjectURL(svgBlob);
+      
+      const img = new Image();
+      img.onload = function() {
+        // Draw the image on the canvas
+        ctx.drawImage(img, 0, 0, 512, 512);
+        URL.revokeObjectURL(url);
+        
+        // Convert canvas to PNG
+        const pngUrl = canvas.toDataURL('image/png');
+        document.getElementById('pngOutput').src = pngUrl;
+      };
+      img.src = url;
+    }
+    
+    // Run conversion when page loads
+    window.onload = convertSvgToPng;
+  </script>
+</body>
+</html> 
