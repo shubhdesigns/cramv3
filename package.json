@@ -1,4 +1,12 @@
 {
+  "name": "cramtime-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm run preview"
+  },
   "dependencies": {
     "@iconify-json/mdi": "^1.2.3",
     "astro-icon": "^1.1.5"
