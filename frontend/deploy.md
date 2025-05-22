@@ -8,7 +8,7 @@ We've made the following changes to ensure a successful deployment:
 
 1. Fixed Firebase exports in `src/utils/firebase.js` to properly export `auth` and `db`
 2. Updated `astro.config.mjs` to use the Vercel adapter
-3. Added the Vercel adapter (`@astrojs/vercel`) to package.json
+3. Added the Vercel adapter (`@astrojs/vercel`)    to package.json
 4. Created a `vercel.json` configuration file
 
 ## 1. Set Up Your Environment Variables
@@ -68,4 +68,4 @@ For Astro-specific issues:
 For build errors:
 1. Check the build logs in Vercel
 2. Fix any import errors, especially those related to Firebase
-3. Re-deploy after making changes 
+3. Re-deploy after making changes   
