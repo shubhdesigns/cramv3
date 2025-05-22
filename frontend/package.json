@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node pre-build.js",
     "build": "astro build",
     "preview": "astro preview",
     "lint": "eslint .",
