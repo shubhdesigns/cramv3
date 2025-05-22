@@ -1,17 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { UserProvider } from "../components/Auth/UserProvider";
-import AuthGuardIsland from "../components/Auth/AuthGuardIsland";
 import QuizzesIsland from "../components/Quizzes/QuizzesIsland";
 ---
 
-<UserProvider>
-  <AuthGuardIsland client:only="react">
-    <BaseLayout title="Practice Tests | cramti.me">
-      <div class="w-full max-w-4xl mx-auto flex flex-col gap-8">
-        <h1 class="font-heading text-3xl md:text-4xl font-bold text-success-light dark:text-success-dark mb-4">Quizzes</h1>
-        <QuizzesIsland client:only="react" />
-      </div>
-    </BaseLayout>
-  </AuthGuardIsland>
-</UserProvider>
+<BaseLayout title="Practice Tests | cramti.me">
+  <div class="w-full max-w-4xl mx-auto flex flex-col gap-8">
+    <h1 class="font-heading text-3xl md:text-4xl font-bold text-success-light dark:text-success-dark mb-4">Quizzes</h1>
+    <QuizzesIsland client:only="react" />
+  </div>
+</BaseLayout>

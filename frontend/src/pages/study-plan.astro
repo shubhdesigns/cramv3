@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StudyPlanIsland from '../components/StudyPlan/StudyPlanIsland.tsx';
-import AuthGuardIsland from '../components/Auth/AuthGuardIsland.tsx';
 
 // Frontend Firebase config and callable function setup assumed
 // import { functions } from '../firebase/...';
@@ -12,10 +11,9 @@ const mockSubjects = ["AP Biology", "SAT Math"];
 
 ---
 
-<BaseLayout>
-  <AuthGuardIsland client:only="react" />
+<BaseLayout title="Study Plan | cramti.me">
   <section class="max-w-2xl mx-auto py-12">
     <h1 class="text-3xl font-bold mb-6">Personalized Study Plan</h1>
-    <StudyPlanIsland client:only="react" />
+    <StudyPlanIsland client:only="react" uid="demo-user" />
   </section>
 </BaseLayout>
