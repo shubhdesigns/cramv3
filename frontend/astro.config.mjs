@@ -11,7 +11,11 @@ export default defineConfig({
   ],
   output: "server", // Change to server for SSR support
   adapter: vercel({
-    imageService: false // Disable sharp image optimization
+    imageService: false, // Disable sharp image optimization
+    analytics: true, // Enable Vercel Analytics
+    devImageService: false,
+    edgeMiddleware: false, // Disable edge middleware
+    includeFiles: ["./public/*"] // Include all public files
   }),
   site: process.env.PUBLIC_SITE_URL || "https://cramti.me", // Update for SEO
   markdown: {
