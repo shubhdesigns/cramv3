@@ -3,8 +3,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import QuizIsland from "../../components/Quiz/QuizIsland.tsx";
 import { getQuizById } from "../../utils/quizService.ts";
 
-// This route will be server-rendered
-export const prerender = false;
+// Define all possible static paths - we're using a wildcard pattern here
+export function getStaticPaths() {
+  return [
+    { params: { quizId: undefined } },
+  ];
+}
 
 // Get param from Astro (static, SSR, or SSG)
 const { quizId } = Astro.params;

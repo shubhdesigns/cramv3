@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,7 +9,8 @@ export default defineConfig({
     react(),
     tailwind()
   ],
-  output: "static", // Static output for Vercel
+  output: "server", // Change to server for SSR support
+  adapter: vercel(),
   site: process.env.PUBLIC_SITE_URL || "https://cramti.me", // Update for SEO
   markdown: {
     syntaxHighlight: 'prism', // Use Prism instead of Shiki to avoid dependency issues
