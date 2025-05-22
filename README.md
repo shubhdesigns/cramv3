@@ -2,6 +2,8 @@
 
 A full-stack, AI-powered exam-prep platform for AP, SAT, and ACT.
 
+> **Note:** This project is configured for deployment on Vercel. See frontend/deploy.md for detailed deployment instructions.
+
 ## Tech Stack
 
 - **Frontend:** Astro, React, Tailwind CSS, shadcn/ui, Framer Motion
