@@ -1,93 +1,72 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-// Remove Firebase imports for server-side rendering
-// import { db } from '../../firebase/firebase';
-// import { getDoc, doc, collection, getDocs, query, where, limit } from 'firebase/firestore';
+import { db } from '../../firebase/firebase';
+import { getDoc, doc, collection, getDocs, query, where, limit } from 'firebase/firestore';
 import SubjectProgressIsland from '../../components/SubjectProgressIsland.tsx';
 import SubjectUnitsIsland from '../../components/Subjects/SubjectUnitsIsland.tsx';
-
-// Get props from getStaticPaths
 const { id } = Astro.params;
-const { subject, examInfo, resourceCounts, relatedSubjects } = Astro.props;
 
-// Required for dynamic routes in Astro
-export function getStaticPaths() {
-  // Define all data inside getStaticPaths to ensure it's in scope
-  // Static data for specific subjects
-  const subjects = {
-    "sat": {
-      id: "sat",
-      name: "SAT Preparation",
-      icon: "📝",
-      description: "Comprehensive preparation for the SAT exam covering Reading, Writing, and Math sections. Master key concepts and test-taking strategies to achieve your target score.",
-      category: "Test Preparation",
-      examType: "SAT",
-      examId: "sat-2023",
-    },
-    "ap-biology": {
-      id: "ap-biology",
-      name: "AP Biology",
-      icon: "🧬",
-      description: "Explore the core concepts of biology including evolution, cellular processes, genetics, and ecology. Prepare effectively for the AP Biology exam with comprehensive materials and practice.",
-      category: "Science",
-      examType: "AP",
-      examId: "ap-bio-2023",
+let subject = null;
+let examInfo = null;
+let relatedSubjects = [];
+let resourceCounts = {
+  flashcards: 0,
+  quizzes: 0,
+  frqs: 0
+};
+
+try {
+  const docSnap = await getDoc(doc(db, 'subjects', id));
+  if (docSnap.exists()) subject = docSnap.data();
+  
+  // Also fetch exam information if available
+  const examSnap = await getDoc(doc(db, 'exams', subject?.examId || ''));
+  if (examSnap.exists()) examInfo = examSnap.data();
+
+  // Get resource counts
+  if (subject) {
+    // Fetch flashcard count
+    const flashcardsQuery = query(
+      collection(db, 'flashcards'),
+      where('subjectId', '==', id),
+      limit(1000)
+    );
+    const flashcardsSnap = await getDocs(flashcardsQuery);
+    resourceCounts.flashcards = flashcardsSnap.size;
+    
+    // Fetch quiz count
+    const quizzesQuery = query(
+      collection(db, 'quizzes'),
+      where('subjectId', '==', id),
+      limit(1000)
+    );
+    const quizzesSnap = await getDocs(quizzesQuery);
+    resourceCounts.quizzes = quizzesSnap.size;
+    
+    // Fetch FRQ count
+    const frqsQuery = query(
+      collection(db, 'frqs'),
+      where('subjectId', '==', id),
+      limit(1000)
+    );
+    const frqsSnap = await getDocs(frqsQuery);
+    resourceCounts.frqs = frqsSnap.size;
+    
+    // Get related subjects in the same category
+    if (subject.category) {
+      const relatedQuery = query(
+        collection(db, 'subjects'), 
+        where('category', '==', subject.category),
+        where('id', '!=', id),
+        limit(3)
+      );
+      const relatedSnap = await getDocs(relatedQuery);
+      relatedSubjects = relatedSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     }
-  };
-
-  // Static exam data
-  const exams = {
-    "sat-2023": {
-      date: "Multiple dates available",
-      duration: "3 hours",
-      questionTypes: ["Multiple Choice", "Grid-in"]
-    },
-    "ap-bio-2023": {
-      date: "May 14, 2023",
-      duration: "3 hours",
-      questionTypes: ["Multiple Choice", "Free Response"]
-    }
-  };
-
-  // Static resource counts
-  const resourceCountsMap = {
-    "sat": {
-      flashcards: 124,
-      quizzes: 8,
-      frqs: 0
-    },
-    "ap-biology": {
-      flashcards: 86,
-      quizzes: 12,
-      frqs: 6
-    }
-  };
-
-  // Static related subjects
-  const relatedSubjectsMap = {
-    "sat": [
-      { id: "act", name: "ACT Preparation", icon: "📊", category: "Test Preparation" },
-      { id: "psat", name: "PSAT Preparation", icon: "📌", category: "Test Preparation" }
-    ],
-    "ap-biology": [
-      { id: "ap-chemistry", name: "AP Chemistry", icon: "⚗️", category: "Science" },
-      { id: "ap-environmental-science", name: "AP Environmental Science", icon: "🌎", category: "Science" }
-    ]
-  };
-
-  // Return an array of objects containing the known paths
-  return Object.keys(subjects).map(id => {
-    return {
-      params: { id },
-      // Pass the subject data as props
-      props: { 
-        subject: subjects[id],
-        examInfo: subjects[id].examId ? exams[subjects[id].examId] : null,
-        resourceCounts: resourceCountsMap[id] || { flashcards: 0, quizzes: 0, frqs: 0 },
-        relatedSubjects: relatedSubjectsMap[id] || []
-      }
-    };
-  });
+  }
+  
+} catch (e) {
+  console.error("Error fetching subject:", e);
 }
 ---
 
