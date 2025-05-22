@@ -14,8 +14,7 @@ export default defineConfig({
     imageService: false, // Disable sharp image optimization
     analytics: true, // Enable Vercel Analytics
     devImageService: false,
-    edgeMiddleware: false, // Disable edge middleware
-    includeFiles: ["./public/*"] // Include all public files
+    edgeMiddleware: false // Disable edge middleware
   }),
   site: process.env.PUBLIC_SITE_URL || "https://cramti.me", // Update for SEO
   markdown: {

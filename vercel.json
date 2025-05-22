@@ -1,11 +1,8 @@
 {
-  "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build",
+  "buildCommand": "cd frontend && mkdir -p public && npm install --legacy-peer-deps && npm run build",
   "outputDirectory": "frontend/.vercel/output",
   "github": {
     "silent": true
   },
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/api/entry" }
-  ],
   "framework": "astro"
 } 
