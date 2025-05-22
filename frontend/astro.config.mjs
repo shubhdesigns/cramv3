@@ -10,7 +10,9 @@ export default defineConfig({
     tailwind()
   ],
   output: "server", // Change to server for SSR support
-  adapter: vercel(),
+  adapter: vercel({
+    imageService: false // Disable sharp image optimization
+  }),
   site: process.env.PUBLIC_SITE_URL || "https://cramti.me", // Update for SEO
   markdown: {
     syntaxHighlight: 'prism', // Use Prism instead of Shiki to avoid dependency issues
