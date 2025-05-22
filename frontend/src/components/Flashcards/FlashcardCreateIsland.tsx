@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { db, auth } from "../../firebase/firebase";
-import { collection, addDoc } from "firebase/firestore";
 import { Button } from "../UI/Button";
 
 export default function FlashcardCreateIsland() {
@@ -12,27 +10,21 @@ export default function FlashcardCreateIsland() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     setLoading(true);
     setError(null);
     setSuccess(false);
-    try {
-      const user = auth.currentUser;
-      if (!user) throw new Error("You must be signed in.");
-      await addDoc(collection(db, `users/${user.uid}/flashcards`), {
-        prompt,
-        answer,
-        status: "new",
-        createdAt: new Date().toISOString(),
-      });
+
+    // Simulate a successful flashcard creation
+    setTimeout(() => {
+      // In a real app, this would send data to the database
+      console.log("Created flashcard:", { prompt, answer });
       setPrompt("");
       setAnswer("");
+      setLoading(false);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 1500);
-    } catch (err: any) {
-      setError(err.message || "Failed to add flashcard.");
-    } finally {
-      setLoading(false);
-    }
+    }, 600);
   };
 
   return (

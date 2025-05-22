@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useFirebase } from "../../firebase/init";
 import { Button } from "../UI/Button";
 
 interface Question {
@@ -9,21 +8,77 @@ interface Question {
   answer: string;
 }
 
-// Sample data for demo purposes when Firebase isn't available
-const sampleQuestions: Question[] = [
-  {
-    id: "q1",
-    text: "What is the powerhouse of the cell?",
-    choices: ["Nucleus", "Mitochondria", "Endoplasmic Reticulum", "Golgi Apparatus"],
-    answer: "Mitochondria"
-  },
-  {
-    id: "q2",
-    text: "Which of the following is a primary function of photosynthesis?",
-    choices: ["Cellular respiration", "Converting light energy to chemical energy", "Breaking down proteins", "Cell division"],
-    answer: "Converting light energy to chemical energy"
-  }
-];
+// Sample data for demo purposes
+const sampleQuizzes = {
+  'ap-bio-quiz1': [
+    {
+      id: "q1",
+      text: "What is the powerhouse of the cell?",
+      choices: ["Nucleus", "Mitochondria", "Endoplasmic Reticulum", "Golgi Apparatus"],
+      answer: "Mitochondria"
+    },
+    {
+      id: "q2",
+      text: "Which of the following is a primary function of photosynthesis?",
+      choices: ["Cellular respiration", "Converting light energy to chemical energy", "Breaking down proteins", "Cell division"],
+      answer: "Converting light energy to chemical energy"
+    },
+    {
+      id: "q3",
+      text: "DNA replication occurs during which phase of the cell cycle?",
+      choices: ["G1", "S", "G2", "M"],
+      answer: "S"
+    }
+  ],
+  'sat-math-quiz1': [
+    {
+      id: "q1",
+      text: "Solve for x: 2x + 5 = 15",
+      choices: ["x = 5", "x = 10", "x = 8", "x = 7.5"],
+      answer: "x = 5"
+    },
+    {
+      id: "q2", 
+      text: "What is the area of a circle with radius 6?",
+      choices: ["12π", "36π", "6π", "24π"],
+      answer: "36π"
+    },
+    {
+      id: "q3",
+      text: "If y = 3x - 4 and x = 2, what is the value of y?",
+      choices: ["2", "6", "8", "10"],
+      answer: "2"
+    }
+  ],
+  'ap-calc-quiz1': [
+    {
+      id: "q1",
+      text: "What is the derivative of f(x) = x²?",
+      choices: ["f'(x) = x", "f'(x) = 2x", "f'(x) = 2", "f'(x) = x²"],
+      answer: "f'(x) = 2x"
+    },
+    {
+      id: "q2",
+      text: "What is the integral of g(x) = 3x²?",
+      choices: ["G(x) = x³ + C", "G(x) = 6x + C", "G(x) = x³/3 + C", "G(x) = x² + C"],
+      answer: "G(x) = x³ + C"
+    }
+  ],
+  'ap-history-quiz1': [
+    {
+      id: "q1",
+      text: "Which document begins with 'When in the Course of human events...'?",
+      choices: ["The Constitution", "The Declaration of Independence", "The Federalist Papers", "The Emancipation Proclamation"],
+      answer: "The Declaration of Independence"
+    },
+    {
+      id: "q2",
+      text: "Who was the first U.S. President?",
+      choices: ["Thomas Jefferson", "John Adams", "George Washington", "Benjamin Franklin"],
+      answer: "George Washington"
+    }
+  ]
+};
 
 export default function QuizTakeIsland({ quizId }: { quizId: string }) {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -32,66 +87,19 @@ export default function QuizTakeIsland({ quizId }: { quizId: string }) {
   const [answers, setAnswers] = useState<{ [id: string]: string }>({});
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState(0);
-  const [firebaseModule, setFirebaseModule] = useState<any>(null);
 
   useEffect(() => {
-    useFirebase((module) => {
-      setFirebaseModule(module);
-      if (module) {
-        fetchQuiz(module);
+    // Load questions for the selected quiz
+    setTimeout(() => {
+      const quizQuestions = sampleQuizzes[quizId as keyof typeof sampleQuizzes];
+      if (quizQuestions) {
+        setQuestions(quizQuestions);
+      } else {
+        setError("Quiz not found");
       }
-    });
-  }, [quizId]);
-
-  const fetchQuiz = async (module: any) => {
-    setLoading(true);
-    setError(null);
-    try {
-      // Use sample data in case Firebase is not available
-      setQuestions(sampleQuestions);
-      
-      // If Firebase is initialized, try to fetch real data
-      if (module && module.db && module.firestore) {
-        try {
-          // Fetch quiz doc
-          const quizDoc = await module.firestore.getDoc(
-            module.firestore.doc(module.db, "quizzes", quizId)
-          );
-          const quizData = quizDoc.data();
-          let questionIds = quizData?.questionIds || [];
-          
-          if (questionIds.length > 0) {
-            // Fetch questions
-            const qs: Question[] = [];
-            for (const qid of questionIds) {
-              const qDoc = await module.firestore.getDoc(
-                module.firestore.doc(module.db, "questions", qid)
-              );
-              const qData = qDoc.data();
-              if (qData) {
-                qs.push({
-                  id: qid,
-                  text: qData.text,
-                  choices: qData.choices,
-                  answer: qData.answer,
-                });
-              }
-            }
-            if (qs.length > 0) {
-              setQuestions(qs);
-            }
-          }
-        } catch (err: any) {
-          console.error("Error fetching from Firebase:", err);
-          // Keep using sample data
-        }
-      }
-    } catch (err: any) {
-      setError(err.message || "Failed to load quiz.");
-    } finally {
       setLoading(false);
-    }
-  };
+    }, 500); // Simulate loading delay
+  }, [quizId]);
 
   const handleSelect = (qid: string, choice: string) => {
     setAnswers(a => ({ ...a, [qid]: choice }));
@@ -104,27 +112,6 @@ export default function QuizTakeIsland({ quizId }: { quizId: string }) {
     });
     setScore(correct);
     setSubmitted(true);
-    // Save to Firestore if available
-    try {
-      if (firebaseModule && firebaseModule.auth && firebaseModule.db && firebaseModule.firestore) {
-        const user = firebaseModule.auth.currentUser;
-        if (user) {
-          await firebaseModule.firestore.setDoc(
-            firebaseModule.firestore.doc(firebaseModule.db, `users/${user.uid}/progress`, quizId),
-            {
-              score: correct,
-              total: questions.length,
-              lastDate: new Date().toISOString(),
-              answers,
-            }, 
-            { merge: true }
-          );
-        }
-      }
-    } catch (err) {
-      // Ignore save error for now
-      console.error("Error saving progress:", err);
-    }
   };
 
   if (loading) return <div className="text-center text-success-light dark:text-success-dark font-heading">Loading quiz...</div>;

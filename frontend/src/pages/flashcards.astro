@@ -1,7 +1,5 @@
 ---
-import { Layout } from "../components/UI/Layout";
-import { UserProvider } from "../components/Auth/UserProvider";
-import AuthGuardIsland from "../components/Auth/AuthGuardIsland";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import FlashcardCreateIsland from "../components/Flashcards/FlashcardCreateIsland";
 import FlashcardsIsland from "../components/Flashcards/FlashcardsIsland";
 
@@ -25,14 +23,10 @@ const sampleFlashcards = [
 // const flashcards = await getUserFlashcards();
 ---
 
-<UserProvider>
-  <AuthGuardIsland client:only="react">
-    <Layout>
-      <div class="w-full max-w-4xl mx-auto flex flex-col gap-8">
-        <h1 class="font-heading text-3xl md:text-4xl font-bold text-accent2-light dark:text-accent2-dark mb-4">Flashcards</h1>
-        <FlashcardCreateIsland client:only="react" />
-        <FlashcardsIsland client:only="react" />
-      </div>
-    </Layout>
-  </AuthGuardIsland>
-</UserProvider>
+<BaseLayout title="Flashcards | cramti.me">
+  <div class="w-full max-w-4xl mx-auto flex flex-col gap-8">
+    <h1 class="font-heading text-3xl md:text-4xl font-bold text-accent2-light dark:text-accent2-dark mb-4">Flashcards</h1>
+    <FlashcardCreateIsland client:only="react" />
+    <FlashcardsIsland client:only="react" />
+  </div>
+</BaseLayout>

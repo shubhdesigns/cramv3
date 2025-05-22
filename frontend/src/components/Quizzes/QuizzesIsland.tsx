@@ -15,62 +15,22 @@ interface Quiz {
 const fallbackQuizzes: Quiz[] = [
   { id: "ap-bio-quiz1", title: "AP Biology Quiz 1", subjectId: "ap-bio", questionCount: 10, description: "Unit 1: Chemistry of Life" },
   { id: "sat-math-quiz1", title: "SAT Math Practice", subjectId: "sat-math", questionCount: 15, description: "Algebra & Functions" },
+  { id: "ap-calc-quiz1", title: "AP Calculus AB Quiz", subjectId: "ap-calc", questionCount: 12, description: "Limits & Derivatives" },
+  { id: "ap-history-quiz1", title: "AP US History Quiz", subjectId: "ap-history", questionCount: 8, description: "Colonial America" },
 ];
 
 export default function QuizzesIsland() {
-  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [quizzes, setQuizzes] = useState<Quiz[]>(fallbackQuizzes);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedQuizId, setSelectedQuizId] = useState<string | null>(null);
-  const [firebaseModule, setFirebaseModule] = useState<any>(null);
-
+  
+  // Removed Firebase dependency - using static data instead
   useEffect(() => {
-    useFirebase((module) => {
-      setFirebaseModule(module);
-      if (module) {
-        fetchQuizzes(module);
-      }
-    });
+    // Just using the fallback quizzes data for now
+    setQuizzes(fallbackQuizzes);
+    setLoading(false);
   }, []);
-
-  const fetchQuizzes = async (module: any) => {
-    setLoading(true);
-    setError(null);
-    try {
-      // Use static data for now to avoid SSR issues
-      setQuizzes(fallbackQuizzes);
-      
-      // If we have Firebase initialized, try to fetch real data
-      if (module && module.db && module.firestore) {
-        try {
-          const snap = await module.firestore.getDocs(
-            module.firestore.collection(module.db, "quizzes")
-          );
-          
-          if (!snap.empty) {
-            const qs = snap.docs.map((doc: any) => {
-              const data = doc.data();
-              return {
-                id: doc.id,
-                title: data.title,
-                subjectId: data.subjectId,
-                questionCount: data.questionIds?.length,
-                description: data.description,
-              };
-            });
-            setQuizzes(qs);
-          }
-        } catch (err: any) {
-          console.error("Failed to fetch from Firebase:", err);
-          // Keep using fallback data
-        }
-      }
-    } catch (err: any) {
-      setError(err.message || "Failed to load quizzes.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return <div className="text-center text-success-light dark:text-success-dark font-heading">Loading quizzes...</div>;

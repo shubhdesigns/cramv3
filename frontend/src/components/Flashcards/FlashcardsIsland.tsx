@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useFirebase } from "../../firebase/init";
-import { collection, getDocs } from "firebase/firestore";
 import { Card } from "../UI/Card";
 import { Button } from "../UI/Button";
 import Dialog from "../UI/Dialog";
-import { httpsCallable } from "firebase/functions";
 
 interface Flashcard {
   id: string;
@@ -13,9 +10,19 @@ interface Flashcard {
   status?: string;
 }
 
+// Sample flashcards data
+const sampleFlashcards: Flashcard[] = [
+  { id: "f1", prompt: "Photosynthesis occurs in the...?", answer: "Chloroplasts", status: "new" },
+  { id: "f2", prompt: "What is the value of π (Pi) rounded to 3 decimals?", answer: "3.142", status: "learned" },
+  { id: "f3", prompt: "What is the capital of France?", answer: "Paris", status: "new" },
+  { id: "f4", prompt: "What is the chemical symbol for gold?", answer: "Au", status: "learning" },
+  { id: "f5", prompt: "What is the powerhouse of the cell?", answer: "Mitochondria", status: "new" },
+  { id: "f6", prompt: "The process of cell division is called?", answer: "Mitosis", status: "learning" },
+];
+
 export default function FlashcardsIsland() {
-  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [flashcards, setFlashcards] = useState<Flashcard[]>(sampleFlashcards);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [flipped, setFlipped] = useState<{ [id: string]: boolean }>({});
   const [showAI, setShowAI] = useState(false);
@@ -23,60 +30,28 @@ export default function FlashcardsIsland() {
   const [aiLoading, setAILoading] = useState(false);
   const [aiError, setAIError] = useState<string | null>(null);
   const [aiResults, setAIResults] = useState<string>("");
-  const [firebaseModule, setFirebaseModule] = useState<any>(null);
 
-  // Initialize Firebase when component mounts
+  // Use sample data instead of fetching from Firebase
   useEffect(() => {
-    useFirebase((module) => {
-      setFirebaseModule(module);
-      fetchFlashcards(module);
-    });
+    setFlashcards(sampleFlashcards);
+    setLoading(false);
   }, []);
-
-  const fetchFlashcards = async (module: any) => {
-    if (!module) return;
-
-    setLoading(true);
-    setError(null);
-    try {
-      const user = module.auth.currentUser;
-      if (!user) throw new Error("You must be signed in.");
-      const snap = await getDocs(collection(module.db, `users/${user.uid}/flashcards`));
-      const cards: Flashcard[] = [];
-      snap.forEach(doc => {
-        const data = doc.data();
-        cards.push({
-          id: doc.id,
-          prompt: data.prompt,
-          answer: data.answer,
-          status: data.status,
-        });
-      });
-      setFlashcards(cards);
-    } catch (err: any) {
-      setError(err.message || "Failed to load flashcards.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleAskAI = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!firebaseModule) {
-      setAIError('Firebase not initialized');
-      return;
-    }
-
+    
     setAILoading(true);
     setAIError(null);
     setAIResults("");
+    
     try {
-      const generateFlashcards = httpsCallable(firebaseModule.functions, "generateFlashcards");
-      const res: any = await generateFlashcards({ topic: aiTopic });
-      setAIResults(res.data.flashcards);
+      // Simulate AI response with fixed content
+      setTimeout(() => {
+        setAIResults(`Generated flashcards for "${aiTopic}":\n\n1. Question: What is ${aiTopic}?\nAnswer: ${aiTopic} is an important concept in its field.\n\n2. Question: When was ${aiTopic} discovered?\nAnswer: The concept of ${aiTopic} emerged through early research.\n\n3. Question: How is ${aiTopic} applied?\nAnswer: ${aiTopic} is applied in various contexts to solve problems.`);
+        setAILoading(false);
+      }, 1500);
     } catch (err: any) {
-      setAIError(err.message || "Failed to generate flashcards.");
-    } finally {
+      setAIError("Failed to generate flashcards.");
       setAILoading(false);
     }
   };
