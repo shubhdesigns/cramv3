@@ -18,24 +18,4 @@ import GamesContainer from "../components/games/GamesContainer";
       </div>
     </Layout>
   </AuthGuardIsland>
-</UserProvider> 
-import { Layout } from "../components/UI/Layout";
-import { Card } from "../components/UI/Card";
-import { Button } from "../components/UI/Button";
-import { UserProvider } from "../components/Auth/UserProvider";
-import AuthGuardIsland from "../components/Auth/AuthGuardIsland";
-import PomodoroIsland from "../components/games/PomodoroIsland";
-import MemoryGameIsland from "../components/games/MemoryGameIsland";
-import GamesContainer from "../components/games/GamesContainer";
----
-
-<UserProvider>
-  <AuthGuardIsland client:load>
-    <Layout>
-      <div class="w-full max-w-4xl mx-auto flex flex-col gap-8">
-        <h1 class="font-heading text-3xl md:text-4xl font-bold text-info-light dark:text-info-dark mb-4">BreakTime Games</h1>
-        <GamesContainer client:load />
-      </div>
-    </Layout>
-  </AuthGuardIsland>
 </UserProvider>
