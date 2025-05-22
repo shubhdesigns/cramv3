@@ -3,6 +3,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import QuizIsland from "../../components/Quiz/QuizIsland.tsx";
 import { getQuizById } from "../../utils/quizService.ts";
 
+// This route will be server-rendered
+export const prerender = false;
+
 // Get param from Astro (static, SSR, or SSG)
 const { quizId } = Astro.params;
 
